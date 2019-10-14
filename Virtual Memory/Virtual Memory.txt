@@ -1,0 +1,17 @@
+On Windows:
+
+Virtual Memory:
+Process does not born with prefixed memory, but it demands it.
+Page file size is 4KB (4096 Bytes).
+
+X64 has TLB(Lookaside buffer) of 2MB.
+X84 has TLB(Lookaside buffer) of 4MB.
+
+Commited: in use.
+Reserved: Reserved for future use - cannot be allocated. It can be committed but not allocat it again.
+
+Memory types:
+	Private - data which is used only by the process. (Every process has a heap).
+	Shareable - shared memory. Other process can use that memory. Example - image like .EXE, .DLLs.
+	
+Task Manager only shows the private bytes.

@@ -1,0 +1,35 @@
+Info taken from: http://blogs.microsoft.co.il/sasha/2016/01/05/windows-process-memory-usage-demystified/
+
+Each page of virtual memory can be in one of three states: free, reserved, and committed.
+
+Free pages - available for subsequent allocations (excluding unusable pages).
+
+Reserved - pages are not available for subsequent allocations, but they are not backed by physical memory.
+
+Committed pages - may be accessed by your application. The system guarantees that when you access a committed page, there will be physical memory to back it up.
+
+committed memory can be shared with other processes. If	two processes share 100MB of physical memory, the 100MB virtual region is committed in both processes, but it only counts once towards the commit limit.
+
+The non-free bytes value is exactly the amount of virtual memory that is available for subsequent allocations.
+
+Shareable memory - There are two kinds of memory that is shared:
+	memory pages that are currently mapped into the virtual address space of at least two processes.
+
+	Shareable memory that is not currently shared: memory pages that may be shared in the future, but are currently mapped into the virtual address space of fewer than two processes.
+
+NOTE: The terms “private” and “shared” (or “shareable”) memory refer only to committed memory. Reserved pages cannot be shared, so it makes no sense to ask whether they are private or shareable.
+
+Private bytes - committed memory that is not shared or shareable with other processes. Some of this committed memory may be backed by the page file, and not currently resident in physical memory.
+
+Physical memory:
+
+	Private physical bytes - This refers to the physical pages that are mapped to private committed pages in our process, and is often called the process’ private working set.
+	
+	Shareable or shared physical bytes - Similarly, these are the physical pages that are mapped to shareable committed pages in our process.
+	
+	Total physical bytes - Simply the sum of the previous two metrics. You might be tempted to say that this is the amount of physical memory consumed by our process, which would be accurate if it wasn’t for sharing.
+	
+	Committed bytes not mapped yet to any backing storage (RAM or page file) - Windows doesn’t allocate any physical memory when you commit a page of virtual memory. Only when the virtual page is first accessed, Windows handles the hardware exception by lazily allocating a page of physical memory.
+	So, you could have committed pages in your process that aren’t currently backed by neither RAM nor page file — simply because they were never accessed until now.
+	
+	

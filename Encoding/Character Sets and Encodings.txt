@@ -1,0 +1,8 @@
+Characters sets - declares what are the symbols we can use (show to the screen).
+Encoding - the format, the rules of reading the bits.
+
+If we look at text like "Jon uses ɡoogle" - we cannot deduce the Encoding of it.
+We can guess that the encoding is ASCII, but the maybe one of the letters is taken not from the
+ASCII table. In that example, the first ɡ is 0261h (0010 0110 0001) while the second g is "reguler",
+from the ASCII table with value 0067h (0110 0111). // TODO verify with which encoding that is possible.
+

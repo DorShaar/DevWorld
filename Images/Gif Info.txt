@@ -1,0 +1,30 @@
+GIF info: https://en.wikipedia.org/wiki/GIF
+
+The Graphics Interchange Format, better known by its acronym GIF (/dʒɪf/ JIF or /ɡɪf/ GHIF), is a bitmap image format that was developed by a team at the bulletin board service (BBS) provider CompuServe led by American computer scientist Steve Wilhite on June 15, 1987.[1] It has since come into widespread usage on the World Wide Web due to its wide support and portability.
+
+The format supports up to 8 bits per pixel for each image, allowing a single image to reference its own palette of up to 256 different colors chosen from the 24-bit RGB color space. It also supports animations and allows a separate palette of up to 256 colors for each frame. These palette limitations make GIF less suitable for reproducing color photographs and other images with color gradients, but it is well-suited for simpler images such as graphics or logos with solid areas of color.
+
+GIF images are compressed using the Lempel–Ziv–Welch (LZW) lossless data compression technique to reduce the file size without degrading the visual quality
+
+
+Paletts:
+GIF is palette-based: the colors used in an image (a frame) in the file have their RGB values defined in a palette table that can hold up to 256 entries,
+and the data for the image refer to the colors by their indices (0–255) in the palette table. The color definitions in the palette can be drawn from a color space of millions
+of shades (224 shades, 8 bits for each primary), but the maximum number of colors a frame can use is 256. This limitation seemed reasonable when GIF was developed because few people
+could afford the hardware to display more colors simultaneously. Simple graphics, line drawings, cartoons, and grey-scale photographs typically need fewer than 256 colors.
+
+Each frame can designate one index as a "transparent background color": any pixel assigned this index takes on the color of the pixel in the same position from the background,
+which may have been determined by a previous frame of animation.
+
+Many techniques, collectively called dithering, have been developed to approximate a wider range of colors with a small color palette by using pixels of two or more colors to 
+approximate in-between colors. These techniques sacrifice spatial resolution to approximate deeper color resolution. While not part of the GIF specification, dithering can be used
+ in images subsequently encoded as GIF images. This is often not an ideal solution for GIF images, both because the loss of spatial resolution typically makes an image look fuzzy
+ on the screen, and because the dithering patterns often interfere with the compressibility of the image data, working against GIF's main purpose.
+
+In the early days of graphical web browsers[when?], graphics cards with 8-bit buffers (allowing only 256 colors) were common and it was fairly common to make GIF images using the 
+websafe palette.[according to whom?] This ensured predictable display, but severely limited the choice of colors. When 24-bit color became the norm palettes could instead be populated
+ with the optimum colors for individual images.
+
+A small color table may suffice for small images, and keeping the color table small allows the file to be downloaded faster. Both the 87a and 89a specifications allow color tables 
+of 2n colors for any n from 1 through 8. Most graphics applications will read and display GIF images with any of these table sizes; but some do not support all sizes when creating images.
+Tables of 2, 16, and 256 colors are widely supported.
