@@ -1,0 +1,28 @@
+
+To create nugget package (for example: for "MyCompany.Compression"):
+	1. In MyCompany.Compression directory, create directory "lib".
+	2. In "lib", create directory in the name of target freamwork (for .NetStandard: netstandard2.0, for ..NetFramwwork 4.5: net45 ...)
+	3. In MyCompany.Compression (Next to lib), create nuspec file name "MyCompany.Compression.nuspec"
+		The nuspect file must contains the next xml:
+		<?xml version="1.0" encoding="utf-8"?>
+		<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+		  <metadata>
+			<id>MyCompany.Compression</id>
+			<version>1.0.0</version>
+			<title>MyCompany.Compression</title>
+			<authors>MyCompany</authors>
+			<owners>MyCompany</owners>
+			<requireLicenseAcceptance>false</requireLicenseAcceptance>
+			<description>MyCompany.Compression library</description>
+			<copyright>Copyright © 2019</copyright>
+			<dependencies>
+				<dependency id="MyCompany.SubCompression" version="1.0.0"/>
+			</dependencies>
+		  </metadata>
+		</package>
+		
+		in case the nugget as not dependencies, the dependencies part can be deleted.
+
+	For creating nugget: nuget pack <nuspeck full path>
+		example: nuget pack "C:\Dor.Shaar\Nugets\FileSystem\MyCompany.FileSystem.nuspec"
+	Now a NuGet package (.nupkg) should be created next to the nuget.exe (you can set also the creation path).

@@ -1,0 +1,3 @@
+mount direcorty:
+
+sudo mount -t cifs //192.168.11.25/RnD /mnt/RnD -o username=dor.shaar,domain=corp

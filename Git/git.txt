@@ -1,0 +1,49 @@
+Initialize a directory as reposetory:
+	git init
+	
+Download / clone outer reposetory:
+	git clone <reposetory path>
+
+Create a new branch:
+	git branch <NewBranch>
+
+Move to a branch:
+	git checkout <Branch>
+	
+Create and checkout a new branch:
+	git checkout -b <NewBranch>
+	
+Delete a branch:
+	git branch -d <Branch>
+
+Delete remote branch:
+	git push --delete <RemoteName> <BranchName>
+	Example: git push --delete origin pbi/zip-service
+	
+	git push <remote_name> :<branch_name>
+	
+merge with no fast forward: 
+	git merge <BranchToMerge> --no-ff
+	Explanation: merges the <BranchToMerge> to the current branch.
+	
+Inspect the repository history:
+	git log --oneline --graph --branches --decorate
+	
+Revert (Undo without delete):
+	git revet <commit hash number> -new
+	
+Reset (Undo with delete):
+	git reset --hard HEAD~<n>, while <n> is the number of commits to go back.
+
+Cherry-Pick:
+	git cherry-pick <commit hash Number / tag>
+	Explanation: "merge" a commit (can be from another branch) from to the current branch
+	
+Observe changes:
+	git diff
+
+To remove uncommited changes:
+	git reset --hard
+
+Show commit change:
+	git show <commit_hash>
