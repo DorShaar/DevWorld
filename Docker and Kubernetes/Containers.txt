@@ -1,0 +1,22 @@
+Container:
+	VMware is caplabe of using different applications on the same server, each on one virtual machine. That is instead of using one application per server.
+		Pros:
+		- That was good for minimize resources.
+		
+		Cons:
+		- Each virtual machine demands it's own operation system, it means that it is a wast of memory and resources on just the operation system 	installation.
+		- Also we may need for each OS a license - so it is a cost issue.
+	
+	So instead of using VMware, we can use container.
+	We have a server which will have only one operation system installed on it, it will share it space to some containers.
+	Each application will run on a single container.
+	
+	Summary:
+	Containers are an abstraction at the app layer that packages code and dependencies together. Multiple containers can run on the same machine and share the OS kernel with other containers, each running as isolated processes in user space. Containers take up less space than VMs (container images are typically tens of MBs in size), can handle more applications and require fewer VMs and Operating systems.
+	
+Docker:
+	A tool designed to create, deploy and run applications by using containers.
+	
+Kubernetes:
+	Google opens source product.
+	The conductor of all the containers. It manage a bunch of docker nodes.

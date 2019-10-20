@@ -1,0 +1,31 @@
+private class Measure : IComparable
+{
+	public int Size { get; set; }
+	public int TimeInMS { get; set; }
+
+	public Measure(int size, int time)
+	{
+		Size = size;
+		TimeInMS = time;
+	}
+
+	public int CompareTo(object obj)
+	{
+		int comparisonValue;
+
+		if(Size < ((Measure)obj).Size)
+		{
+			comparisonValue = -1;
+		}
+		else if (Size == ((Measure)obj).Size)
+		{
+			comparisonValue = 0;
+		}
+		else
+		{
+			comparisonValue = 1;
+		}
+
+		return comparisonValue;
+	}
+}

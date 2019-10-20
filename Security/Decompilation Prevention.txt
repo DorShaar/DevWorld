@@ -1,0 +1,29 @@
+From Stackoverflow: https://stackoverflow.com/questions/1276237/how-to-prevent-decompilation-of-any-c-sharp-application
+
+Q:
+We are planning to develop a client server application using C# and MySQL. We plan to sell the product on the shelf like any other software utility. We are worried about the decompilation of our product which does have some sort of edge over our competitors in terms of usability and bundled functionality.
+
+How can we prevent our software from decompilation, so the business logic of the product remains intact?
+
+We have heard about Reflector and other decompilers which makes our code very much vulnerable for copying.
+
+Our customer base is not Corporates but medical practitioners who themselves may not do it but our competitors may want to copy/disable licensing or even replicate the code/functionality so the value of our product goes down in the market.
+
+Any suggestion to prevent this is most welcome.
+
+A:
+If you deploy .NET assemblies to your client machines, some kind of decompilation will always be possible using reflector and similar tools.
+
+However, this situation isn't materially different to what you'd encounter if you wrote the application in native C++. It is always possible to decompile things - if it were impossible, the processor couldn't understand it either.
+
+You're never going to defeat the expert cracker - they'll treat your security as an intellectual puzzle to be solved for the challenge alone.
+
+The question revolves around how hard it is to defeat your licensing practices and the return on investment.
+
+Sit down with a spreadsheet and look through the possible scenarios - the danger is probably less than you think.
+
+Factors like "ease of use" are visible in your software for any user to observe - so you'd think it easy to copy. But, good User experience is rare (and seldom copied well), because most developers (myself included) are nothing like typical users.
+
+I'd suggest you concentrate on making the job of a cracker harder, cause you can never make it impossible, just non-profitable.
+
+One possibility to try: It's possible to pre-compile assemblies into native code as a part of the installation process. Paint.NET does this for performance reasons. I believe that once you've done this, you can discard the original assemblies and use the optimised, native code editions.

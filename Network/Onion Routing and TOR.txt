@@ -1,0 +1,37 @@
+Onion Routing and Tor:
+
+Alice wants to send message to Bob, she needs to send a package with source (Alice's)IP and destination (Bob's) IP.
+The package is sent through routers (another computers / servers). Every routher inside, maybe cannot see the package's content (if it is encrypted), but it do know the sender and reciever identities. Here the motivation for Onion routing arises.
+
+Alice wants to send Bob a message anonymously, so she need a list of three random computers (lets say they are available).
+The three computers are:
+First computer: Carl.
+Middle computer: Dave
+Exit computer: Ted.
+
+The package marked as dest:Bob, is wrapped by another package which marked dest: Ted. Lets call that package T.
+The package T is wrapped by another package which marked dest: Dave. Lets call that package D.
+The package D is wrapped by another package which marked dest: Carl. Lets call that package C.
+
+TOR (web browser) is implementation of Onion Routing, actually called "The Onion Routing".
+
+Question arises: how can we be sure that middle computers will not read inside packages?
+TOR implementes computers comnunication with Diffie-Helmman communication public key encryption.
+
+encryption road:
+Alice get three keys:
+k1 from: Ted (Exit computer).
+k2 from: Dave (middle computer).
+k3 from: Carl (first computer).
+
+Alice, before sending the message, prepares it with encryption:
+Alice takes m (message) and encrypt us with k1, gets c1 (crypted message).
+Alice takes c2 and encrypt us with k2, gets c2.
+Alice takes c2 and encrypt us with k3, gets c3.
+
+Sends c3 to Carl (first computer), which have k3 and decrypt it to c2.
+Carl send c2 to Dave which have k2 and decrypt it to c1.
+Dave send c1 to Ted which have k1 and decrypt it to m (original message).
+
+Those negotiations of getting keys (which must also passed in a secured way), will takes much longer than regular browser. Security costs time.
+

@@ -1,0 +1,27 @@
+Remote debug - the ability to debug another process.
+
+
+Install: en_remote_tools_for_visual_studio_2015_update_3_x64_11055609
+1. on the computer that has the VS.
+2. on the machine that you want to debug the exe.
+It may ask you to restart you computer.
+
+Actual use:
+
+- Make sure that the remote debugger is opened in both the VS machine and the exe machine.
+- In VS, under Debug button, press attach to process.
+- In qualifier line, press find. It should detect the machine which the remote debugger is installed due to the remote debugger run.
+- The available process list will be updated. Make sure that all the process are listed by press "v" on show process from
+  all users.
+- choose the exe you with to debug and click attach.
+
+choosing pdb:
+Way1:
+- If modules window in VS is not opened, press debug->Windows->Modules.
+- right click in the wanted exe - symbol settings.
+- browse to the location of the pdb. (For example: "C:\Users\dor.shaar\Dropbox (Votiro)\Projects\SMD\P-Dir\Versions - P\7.1.2.27 - Fahrenheit Maintenance 1").
+- press load all symbols.
+- Make sure that the version are the same!. In the exe machine go "C:\Program Files\Votiro\SDS Web Service\Sds.Com.Web.ServiceHost.exe", right click and details. Varify the version details.
+
+Way2:
+debug -> options ->Debugging->Symbols->in symbol files (.pdb locations) set the locations of the .pdb.

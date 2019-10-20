@@ -1,0 +1,16 @@
+Explicit Interfaces - Needed when class is implementing two or more interfaces
+which has same method. Explicit is needed in one of them.
+
+Example:
+interface ISomeInterface
+{
+	void MethodA(); // Implicit.
+	void ISomeInterface.MethodB(); // Explicit.
+}
+	
+var byClass = new SomeClass(); // SomeClass implements ISomeInterface.
+byClass.MethodA(); // Works fine.
+byClass.MethodB(); // Does not compile.
+
+var byInterface = (ISomeInterface)byClass;
+byInterface.MethodB(); // Now compiles.

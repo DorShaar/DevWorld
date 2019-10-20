@@ -1,0 +1,57 @@
+Can be found at:
+httpswww.c-sharpcorner.comUploadFilenityaprakashback-to-basics-dispose-vs-finalize
+
+Introduction
+
+We have been using the Dispose method for disposing objects in .NET. For the same purpose, we may also use the Finalize method. In this article I will try to explain what the Dispose and the Finalize methods are and where to use the Finalize and where to use the Dispose. I will also try to explain the difference between them.
+
+Dispose
+
+Garbage collector (GC) plays the main and important role in .NET for memory management so programmer can focus on the application functionality. Garbage collector is responsible for releasing the memory (objects) that is not being used by the application. But GC has limitation that, it can reclaim or release only memory which is used by managed resources. There are a couple of resources which GC is not able to release as it doesn't have information that, how to claim memory from those resources like File handlers, window handlers, network sockets, database connections etc. If your application these resources than it's programs responsibility to release unmanaged resources. For example, if we open a file in our program and not closed it after processing than that file will not be available for other operation or it is being used by other application than they can not open or modify that file. For this purpose FileStream class provides Dispose method. We must call this method after file processing finished. Otherwise it will through exception Access Denied or file is being used by other program.
+
+Close Vs Dispose
+
+Some objects expose Close and Dispose two methods. For Stream classes both serve the same purpose. Dispose method calls Close method inside.
+void Dispose()   
+{  
+    this.Close();  
+}  
+Here question comes, why do we need Dispose method in Stream.Having Dispose method will enable you to write below code and implicitly call dispose method and ultimately will call Close method.
+using(FileStream file = new FileStream("path", FileMode.Open, FileAccess.Read))   
+{  
+    //Do something with file   
+}  
+But for some classes both methods behave slightly different. For example Connection class. If Close method is called than it will disconnect with database and release all resources being used by the connection object and Open method will reconnect it again with database without reinitializing the connection object. However Dispose method completely release the connection object and cannot be reopen just calling Open method. We will have re-initialize the Connection object.
+
+Creating Dispose
+
+To implement Dispose method for your custom class, you need to implement IDisposable interface. IDisposable interface expose Dispose method where code to release unmanaged resource will be written.
+
+Finalize
+
+Finalize method also called destructor to the class. Finalize method can not be called explicitly in the code. Only Garbage collector can call the the Finalize when object become inaccessible. Finalize method cannot be implemented directly it can only be implement via declaring destructor. Following class illustrate, how to declare destructor. It is recommend that implement Finalize and Dispose method together if you need to implement Finalize method. After compilation destructor becomes Finalize method.
+public class MyClass: IDisposable {  
+  
+    //Construcotr   
+    public MyClass() {  
+        //Initialization:   
+    }  
+  
+    //Destrucor also called Finalize   
+    ~MyClass() {  
+        this.Dispose();  
+    }  
+  
+    public void Dispose() {  
+        //write code to release unmanaged resource.   
+    }  
+}  
+Using Finalize
+
+Now question is, When to implement Finalize? There may be any unmanaged resource for example file stream declared at class level. We may not be knowing what stage or which step should be appropriate to close the file. This object is being use at many places in the application. So in this scenario Finalize can be appropriate location where unmanaged resource can be released. It means, clean the memory acquired by the unmanaged resource as soon as object is inaccessible to application.
+
+Finalize is bit expensive to use. It doesn't clean the memory immediately. When application runs, Garbage collector maintains a separate queue/array when it adds all object which has finalized implemented. Other term GC knows which object has Finalize implemented. When the object is ready to claim memory, Garbage Collector call finalize method for that object and remove from the collection. In this process it just clean the memory that used by unmanaged resource. Memory used by managed resource still in heap as inaccessible reference. That memory release, whenever Garbage Collector run next time. Due to finalize method GC will not clear entire memory associated with object in fist attempt.
+
+Conclusion
+
+It is always recommended that, one should not implement the Finalize method until it is extremely necessary. First priority should always be to implement the Dispose method and clean unmanaged as soon as possible when processing finish with that.

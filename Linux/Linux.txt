@@ -1,3 +1,33 @@
 mount direcorty:
+	sudo mount -t cifs //192.168.11.25/RnD /mnt/RnD -o username=dor.shaar,domain=corp
 
-sudo mount -t cifs //192.168.11.25/RnD /mnt/RnD -o username=dor.shaar,domain=corp
+7z:
+	extract: 	7z x <archive name> [-o<output directory>] [-p<password>]
+	pack: 		7z a <packed name> <files / directory> [-p<password>] [-mhe]
+																^ set the files encrypted.
+	list files:	7z l <archive name>	[-p<password>]
+
+files info:
+	info about the current directory files: ls -l[h] 						[--sort=size]	
+												  ^ humen readable			^sort by size
+	info about the directory: ls -ld <DirectoryName>
+
+IO operations:
+	remove directory: rm -r           -rf     			 <DirectoryName>
+						 ^recursive    ^without asking
+
+disk usage:
+	du -sh file_path
+
+packages info:
+
+	uninstall packages:
+		sudo apt-get --purge remove <package name>
+
+	view package permissions:
+		apt-cache show <package name>
+
+	view the locations of all the files installed as part of the package:
+		dpkg -L <package name>
+
+files permissions: https://www.linux.com/learn/understanding-Linux-file-permissions
