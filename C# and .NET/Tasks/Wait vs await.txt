@@ -1,0 +1,7 @@
+Wait and await - while similar conceptually - are actually completely different.
+
+Wait will synchronously block until the task completes. So the current thread is literally blocked waiting for the task to complete. As a general rule, you should use "async all the way down"; that is, don't block on async code. On my blog, I go into the details of how blocking in asynchronous code causes deadlock.
+
+await will asynchronously wait until the task completes. This means the current method is "paused" (its state is captured) and the method returns an incomplete task to its caller. Later, when the await expression completes, the remainder of the method is scheduled as a continuation.
+
+You also mentioned a "cooperative block", by which I assume you mean a task that you're Waiting on may execute on the waiting thread. There are situations where this can happen, but it's an optimization. There are many situations where it can't happen, like if the task is for another scheduler, or if it's already started or if it's a non-code task (such as in your code example: Wait cannot execute the Delay task inline because there's no code for it).

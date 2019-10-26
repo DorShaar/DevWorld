@@ -1,0 +1,26 @@
+As you work with async/await in C#, you'll probably encounter some compiler warnings and errors, especially with regard to the return type. It turns out that the requirements for the caller of a method marked as async vary depending on the method's return type. What's more, changing the return type of an async method can be contagious, as it were, in some cases requiring you to alter the signature not only of its callers but also its callers' callers and so on. While this might initially be perceived as just an annoyance, it's actually an important topic, since the return type can affect the order in which your code executes.
+
+Async Method Return Types at a Glance
+Methods marked with async in C# must return one of the following:
+
+Task
+Task<T>
+ValueTask
+ValueTask<T>
+void
+
+This is not a comprehensive list. While the details on how to do so are outside the scope of this guide, it's worth noting that you can also define your own task-like types starting in C# 7.0. That is an uncommon requirement, however.
+
+To be clear, when we say return type we're talking about what comes before the method name in the method signature. For example:
+
+public static async Task MyMethod(int myParameter)
+{
+  ...
+}
+
+In the above method signature public, static, and async are all what are called "modifiers". The order of these modifiers is not enforced by the C# compiler, but generally, as a convention, the async modifier is put last, just before the return type, which is Task in this example. It's because of this typical positioning that often an asynchronous method in C# is referred to as being either async void or async Task. The contrast between those two is important, as we'll see next.
+
+Why You Should Generally Stick to Task
+If you feel overwhelmed by the list of return types above, let me put your mind at ease. Most of the time, you should just use a return type of Task or Task<T> with async methods. Everything else in the list above is for specific situations that are not very common.
+
+If anything, you have a choice between returning Task and returning void. But even that choice is lopsided, heavily favoring the use of Task. Why? If a method returns void, callers of that method are not allowed to await it. And if you don't await a method, execution of the caller may continue before the method completes. Even more problematic is that the caller can't handle exceptions properly when it does not await an async method. There are a few valid reasons for returning void from an async method, but the vast majority of the time you should return a Task so you can await it.
