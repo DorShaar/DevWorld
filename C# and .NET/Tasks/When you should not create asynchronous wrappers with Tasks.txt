@@ -1,0 +1,42 @@
+From https://www.ben-morris.com/why-you-shouldnt-create-asynchronous-wrappers-with-task-run/
+
+Why you shouldn’t create asynchronous wrappers with Task.Run()
+Many developers confuse asynchronous operations with parallel execution. It’s an easy mistake to make given that both are associated with a Task object. The essential difference is that an asynchronous operation is concerned with which resources you consume while parallel execution is more concerned with how many.
+
+This is often manifested in code that looks something like the example below. It attempts to turn a synchronous method into something asynchronous by wrapping Task.Run() around it:
+
+// This is bad code as it blocks a background thread
+
+public async Task<string> MyTaskAsync(Uri address) 
+{
+    return await Task.Run(() =>
+    {
+        using (var client = new WebClient()) 
+        {
+            return client.DownloadString(address);
+        }
+    });
+}
+The method still runs synchronously, it’s just executing on a background thread. This doesn’t do anything to improve the scalability of the code as you’re actually consuming more resources by pulling a thread from the pool. This is less scalable than running things synchronously as you’re using more resources than you need.
+
+The main purpose of Task.Run() is to execute CPU-bound code in an asynchronous way. It does this by pulling a thread from the thread pool to run the method and returning a Task to represent the completion of the method.
+
+If you wrap IO-bound  work in Task.Run() then you’re just pulling a new thread out to run the code synchronously. It may have a similar signature because it’s returning a Task, but all you’re doing is blocking a different thread.
+
+In this sense using Task.Run() creates a “fake” asynchronous method. It looks like an asynchronous method but it’s really just faking it by doing the processing on a background thread.  Asynchronous methods are not about background threads but making more efficient use of the current thread.
+
+If you want to get the scalability benefits of asynchronous code for IO-bound operations then you need to implement the asynchronous pattern using the async and await keywords. These are, in effect, short-hand for setting up call-backs for long-running operations. An example of the same code executed asynchronously is shown below:
+
+// This is asynchronous
+
+public async Task<string> MyTaskAsync(Uri address)
+{
+    using (var client = new HttpClient())
+    {
+        return await client.GetStringAsync(address);
+    }
+}
+A matter of etiquette
+When you expose an API with an asynchronous method signature you are signalling to consumers that there are scalability benefits to using the method. They will use the method if they are concerned about scalability, though if they are more worried about responsiveness or parallelism they may prefer to invoke a synchronous method on a background thread.
+
+The point is that the choice should be left to the consumer. They can implement the asynchronous method, use a continuation to execute some code once the operation completes or just execute a synchronous version if scalability is not a concern. What you don’t want to do is expose a “fake” asynchronous method that merely wraps a set of synchronous calls. This surprises the user by offering them something that is not what it claims to be, i.e. a asynchronous method that actually runs synchronously.
