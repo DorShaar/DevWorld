@@ -1,0 +1,32 @@
+String concatenation in .NET is very common, but can also be very inefficient if not done properly. Because strings are immutable, any string concatenation results in a new string being returned for every concatenation. For a small number of concatenations, this difference will be minimal, but performance can quickly deteriorate.
+
+Enter the aptly named StringBuilder class, which allows you to concatenate with minimal performance overhead. How it does this is fairly straightforward – on a high level, it’s storing a list of every character you append, and only building up your string once you actually need it. For a demonstration of how to use it, plus the performance benefits, see the below code that benchmarks both of these (using the useful Stopwatch class I mentioned earlier)
+
+
+ 
+var sw = Stopwatch.StartNew();
+string test = "";
+for (int i = 0; i < 10000; i++)
+{
+    test += $"test{i}{Environment.NewLine}";    
+}
+
+Console.WriteLine($"Took {sw.ElapsedMilliseconds} milliseconds to concatenate strings using string concatenation");
+        
+sw = Stopwatch.StartNew();
+var sb = new StringBuilder();
+for (int i = 0; i < 10000; i++)
+{
+    sb.Append($"test{i}");
+    sb.AppendLine();
+}
+
+Console.WriteLine($"Took {sw.ElapsedMilliseconds} milliseconds to concatenate strings using StringBuilder");
+The results of this benchmark are below:
+
+RESULTS:
+Took 785 milliseconds to concatenate strings using the string concatenation
+Took 3 milliseconds to concatenate strings using StringBuilder 
+Wow – that is over 250x faster! And this is for only 10000 concatenations – if you’re building up a large CSV file manually (which is bad practice anyway but let’s not worry about that), your figure may be larger. If you are only concatenating a couple of strings, it’s probably fine to use concatenate without using StringBuilder, but to be honest I like to get in the habit of always using it – the cost of newing up the StringBuilder is, relatively speaking, minuscule.
+
+In my code sample, I am using sb.Append followed by sb.AppendLine – you can actually just call sb.AppendLine, passing through your text you want to append, and it’ll add a new line at the end. I wanted to include Append and AppendLine just to make it a bit clearer.
