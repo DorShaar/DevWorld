@@ -1,0 +1,44 @@
+I installed Docker for Desktop, which includes kuberenetes in it.
+
+- To see the kubernetes version, type:
+	kubectl version
+
+In case you see the next message: "Unable to connect to the server: dial tcp [::1]:8080: connectex: No connection could be made because the target machine actively refused it.", we should configure the config file.
+
+- To view the config file, type:
+	kubectl config view
+
+I saw that there are not context or clusters. We need to create a cluster.
+
+Context:
+A context element in a kubeconfig file is used to group access parameters under a convenient name. Each context has three parameters: cluster, namespace, and user. By default, the kubectl command-line tool uses parameters from the current context to communicate with the cluster.
+
+- Docker for Desktop can use default kubernetes cluster. For that:
+	Docker for Desktop -> Settings -> Kubernetes -> Mark V on Enable Kubernetes -> Apply.
+
+After installation is complete, we can see when running command "kubectl config view", the cluster is docker-desktop.
+
+- To set some context information, type:
+	kubectl config set-context docker-desktop --user=NEW_USER_NAME --cluster=NEW_CLUSTER_NAME
+								^context name		^change user       ^change cluster
+
+After I did it, I could not get right the command "kubectl get pods", so that something we should configure.
+
+Before creating any pods, I wish to play a little bit and create an image, and deploy my application there.
+
+I create text file "hello-world-pod.yaml" with the next content:
+apiVersion: v1
+kind: Pod
+metadata:
+    name: demo
+spec:
+  containers:
+   - name: testpod
+     image: alpine:3.5
+     command: ["ping", "8.8.8.8"]
+
+and to apply pod, means creating image from the data written in the text file, I typed:
+	kubectl apply -f hello-world-pod.yaml
+
+- To insert into a pod, type:
+	kubectl exec -it POD_NAME -- /bin/bash
