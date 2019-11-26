@@ -1,0 +1,1 @@
+https://github.com/davidfowl/AspNetCoreDiagnosticScenarios/blob/master/AsyncGuidance.md?utm_source=csharpdigest&utm_medium=email&utm_campaign=featured
