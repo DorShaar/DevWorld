@@ -1,0 +1,7 @@
+Later equals never.
+
+Code is never perfect, we should be forgiving (because everyone does mistakes / non-perfect job).
+
+Code, making it easy to read actually makes it easier to write.
+
+Functions should do one thing. They should do it well. They do it only.
