@@ -1,0 +1,18 @@
+Taken from https://michaelscodingspot.com/debug-3rd-party-code-dotnet/?utm_source=csharpdigest&utm_medium=email&utm_campaign=featured
+
+When something strange is going on and you can’t understand why. For example, a request to your server returns 
+a 500 error code for no apparent reason. There’s a good chance there was an exception in some middleware for 
+which you don’t have symbols and source code. 
+The exception was swallowed in a catch clause and you are left to guesswork. It happens once and again that 
+you’re calling 3rd party library code and it returns unexpected results. There’s a good chance an exception 
+was thrown and then handled. If you knew the exception details, it might have helped to solve the issue.
+Suppose you’re calling 3rd party library code and it throws an exception. You will see the exception object, 
+but only partial call stack frames. And no local variables from the frame where the exception was thrown. 
+Sure, the exception object contains some of the details, but that’s not the whole picture.
+
+To be able and view the complete stacktrace of a third party library, you should go to
+Options -> Debugging -> Uncheck "Enable Just My Code" and check "Suppress JIT optimization on module load (Managed only)".
+
+On "Release" mode, the build is set to "Optimized code" by default, while in "Debug" mode the default setting is not
+to optimize code. Notice that the IL code produced from Debug and Release builds is the same because code optimization 
+is done in runtime. The only difference is a flag that instructs the JIT compiler to optimize or not to optimize.

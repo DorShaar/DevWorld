@@ -1,0 +1,21 @@
+Security:
+CVE - Common vulnerabilities and exposures.
+Weakness is reported to MITRE, which assigned it a csv number. It is used as ID to a weakness.
+
+Cvss - scoring system.
+
+Nvd - national vulnerabilities database.
+
+Two main methods in detecting known vulnerabilities: Pre-build (reading dependancies files) and built apps.
+Prebuild might be less accurate, since in complex building situations, different from expected library might be installed. 
+In the other hand, in already built apps the vulnerability path cannot be detected.
+
+Vulnerability search must be done on indirect dependencies also.
+
+How to fix a thirs party vulnerability?
+1. Upgrade (might be time consuming for testing and checking if newer version exista)
+2. Downgrade (same, with knowledge of possible less functionality)
+3. Patching - manegment risk if should apply code change or stay with vulnerability.
+4. Unmerged Pull-requests - a solution might be found in an open pull-request to an inactive repo.
+5. Remove / replace dependency.
+6. Dig deeper and fix / block 
