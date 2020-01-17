@@ -1,0 +1,202 @@
+From: https://medium.com/@iliasshaikh/the-magic-of-c-closures-9c6e3fff6ff9
+
+The magic of C# Closures
+
+Closures originated from the world of functional programming, but as programming languages have evolved recently they have been liberally borrowing ideas from other languages and paradigms. In this post, we will look at closures through the lens of C#.
+Closures are like those optical illusions that seem normal when you first look at them, however, their magic unfolds on closer inspection.
+
+Consider this c# code snippet,
+void Main()
+{
+  var a = foo();
+  bar(a);
+}
+
+public Action foo()
+{
+  int i = 100;
+  Action a = () => Console.Write($"{i} ");
+  return a;
+}
+
+public void bar(Action a)
+{
+  a();
+}
+
+On running this piece of code in a console application you see -
+100
+
+On first glance this is fairly intuitive and the output we would expect, but hang on, how can function ‘bar()’ have access to the local ‘i’ variable of foo(), after foo() has finished and in theory popped its variables off the stack.
+We have just seen a ‘closure’ in action.
+It is, as you might imagine, a piece of compiler trickery that makes this possible, but more on that later.
+
+So, what exactly is a ‘closure’?
+According to Wikipedia -
+In programming languages, closures (also lexical closures or function closures) are a technique for implementing lexically scoped name binding in languages with first-class functions. Operationally, a closure is a record storing a function together with an environment : a mapping associating each free variable of the function (variables that are used locally, but defined in an enclosing scope) with the value or storage location to which the name was bound when the closure was created. A closure — unlike a plain function — allows the function to access those captured variables through the closure’s reference to them, even when the function is invoked outside their scope.
+Wow, that’s a mouthful! It’s not however completely inscrutable, before we try and dissect this statement, let me define some of the terms used, bear with me if these are self-evident, but I will expand on them anyways.
+lexical scope — this is a region of statements in your code where a variable is visible. A variable is visible in a statement if it can be referenced from the statement.
+name binding — associating a symbol with an entity such as a variable to its value or address, or a symbol to an operation. Consider the following
+
+// variable 'i' is bound to 100
+int i = 100; 
+      
+// considering AA to be a reference type, 
+// variable 'a' is bound to the start address of the location on the // heap where the bytes for the instance of 'AA' are stored
+AA a = new AA(); 
+        
+// variable 'act' is bound to the anonymous function 
+Action act = ()=> { Console.WriteLine ("hello")};
+
+first-class functions — a programming language is said to have first-class functions when functions can be treated as any other data. In C# first-class functions are supported using anonymous methods and lambdas.
+free variable — a free variable, in simple terms, is a variable that is not bound to a value, i.e. it is not a function parameter and it is not defined in the same function.
+Now that we have set some background, let us try and understand the definition of closure in the context of our original code.
+Consider the lambda
+() => Console.Write($"{i}");
+
+here the variable ‘i’ is free, since it’s not a parameter to the lambda or defined internally. Instead, it gets its value from the environment when the lambda was defined. A closure is hence, a record that stores a function and all the variables/ data that it requires from the environment. In the C#/ .NET world, we have a handy way of enclosing functions and variables — called a class. And indeed, that’s how closures are implemented. So, the code in snippet #1 translates into something like this — please note that actual code generated probably looks a lot different.
+class @AnonymousClass001
+{
+  internal int i;
+  internal void @AnonymousMethod001()
+  {
+    Console.Write($"{i}");
+  }
+}
+
+void Main()
+{
+  var a = foo();
+  bar(a);
+}
+
+public Action foo()
+{
+  int i = 100;
+  var r = new @AnonymousClass001();
+  r.i = i;
+  Action a = r.AnonymousMethod001;
+  return a;
+}
+
+public void bar(Action a)
+{
+  a();
+}
+
+If you think about it, this is possibly the way you would have implemented closures if you’d been asked to.
+Another thing to note from the implementation is that closures capture the ‘variable’ and not the ‘value’. Let’s update our original code slightly to see what the implication of this is. In the following code, we increment the value of I after the lambda has been defined.
+
+public void foo()
+{
+  int i = 100;
+  Action a = () => Console.Write($"{i} ");
+  i++; // increment i after the lambda has been defined
+  bar(a);
+}
+
+public void bar(Action a)
+{
+  a();
+}
+
+Since, the closure captures the variable ‘i’, rather than the value ‘100’, this outputs
+101
+
+As we have seen, closures capture variables and not values. This has at least one counter-intuitive effect on loops.
+Consider the following code
+
+void foo()
+{
+  Action[] acts = new Action[10];
+  for (int i = 0; i < 10; i++)
+  {
+    acts[i] = ()=> Console.Write(i + " ");
+  }
+  
+  foreach (var a in acts)
+  {
+    a();
+  }
+}
+
+On running this the output is
+10 10 10 10 10 10 10 10 10 10
+
+That does not feel right, does it?
+To see what’s happening here we can again try and decompose this snippet to what the compiler would do. The code below will not compile because of the use of the non-existent keyword ‘ref’ in @AnoymousClass001. This is to illustrate the fact that it is the reference that is being used and not the value. Otherwise, ‘int’, being a value type it would not have been possible to illustrate my point
+
+class @AnonymousClass001
+{
+  internal ref int i; // the ref keyword does not exist in c# and is used only for illustrative purposes
+  internal void @AnonymousMethod001()
+  {
+    Console.WriteLine(i + " ");
+  }
+}
+
+void foo()
+{
+  Action[] acts = new Action[10];
+  for (int i = 0; i < 10; i++)
+  {
+    var r = new AnonymousClass001();
+    r.i = ref i;
+    acts[i] = r.AnonymousMethod001;
+  }
+  
+  foreach (var a in acts)
+  {
+    a();
+  }
+}
+
+Hopefully, that explains why we get all 10s instead of numbers in sequence as we really wanted. To get the code to do as we want, we can change our loop block to declare a variable inside the loop block, like so -
+
+void foo()
+{
+  Action[] acts = new Action[10];
+  for (int i = 0; i < 10; i++)
+  {
+    int j = i; // introduce a local variable inside the loop block
+    acts[i] = ()=>Console.Write(j + " ");
+  }
+  
+  foreach (var a in acts)
+  {
+    a();
+  }
+}
+
+This gives us the output as -
+0 1 2 3 4 5 6 7 8 9
+Hopefully, the reason why this works is fairly intuitive by now. The loop variable ‘i’ is shared across all the runs of the loop, while an instance of the variable ‘j’ is created every time the loop block is run.
+
+class @AnonymousClass001
+{
+  internal ref int j; // the ref keyword does not exist in c# and is used only for illustrative purposes
+  internal void @AnonymousMethod001()
+  {
+    Console.WriteLine(j + " ");
+  }
+}
+
+void foo()
+{
+  Action[] acts = new Action[10];
+  for (int i = 0; i < 10; i++)
+  {
+    var r = new AnonymousClass001();
+    int j = i;
+    r.j = ref j; // this is a new variable for each iteration of the loop and not the loop variable
+    acts[i] = r.AnonymousMethod001;
+  }
+  
+  foreach (var a in acts)
+  {
+    a();
+  }
+}
+
+Conclusion
+So, hopefully, that sheds some light on closures in C#. I love them because of how deceptively simple they are and how their interplay with anonymous lambda functions makes the usage and behaviour of anonymous functions intuitive. The thing to watch out for is when you use the loop variable is captured in a lambda, things can get weird.
