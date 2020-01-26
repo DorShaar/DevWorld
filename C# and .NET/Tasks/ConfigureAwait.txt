@@ -1,0 +1,94 @@
+Based on youtube video: www.youtube.com/watch?v=avhLfcglwbg
+
+Lets start with - what is await?
+
+The next code, with the regular await keyword we all know:
+
+private async Task Button_Click(object sender, RoutedEventArgs e)
+{
+	Console.WriteLine("Before DoWorkAsync");
+
+	await LibClass.DoWorkAsync();
+
+	Console.WriteLine("After DoWorkAsync");	
+	button.Background = new SolidColorBrush(Color.HotPink);
+}
+
+is identical to the next code. The await keyword is actualy a continuation task.
+
+private async Task Button_Click(object sender, RoutedEventArgs e)
+{
+	Console.WriteLine("Before DoWorkAsync");
+
+	var task = LibClass.DoWorkAsync().ContinueWith(t => {
+		Console.WriteLine("After DoWorkAsync");	
+		button.Background = new SolidColorBrush(Color.HotPink);
+	});
+	
+	return task;
+}
+
+
+So after that reminder / enlightment, lets task the right questions..
+
+Looking at the Button_Click method, lets say first line (Console.WriteLine) will run on the main thread, the UI thread,
+probably the 'await LibClass.DoWorkAsync()' will run on a background thread. We now ask the question - on which thread
+the continuation task will run? On the Original thread or in the background thread?
+
+This is the where ConfigureAwait(continuewOnCapturedContext) comes to the picture.
+If the we use ConfigureAwait(continuewOnCapturedContext: true), the continuation task will run on the same thread which
+run before the await statment.
+If the we use ConfigureAwait(continuewOnCapturedContext: false), the continuation task will run on a background thread.
+
+Lets assume that we change the Button_Click method to await LibClass.DoWorkAsync().ConfigureAwait(false); We will 
+probably get System.InvalidOperationException: "The calling thread cannot access this object becaseu a different thread
+owns it". So in case of UI application, we should leave the ConfigureAwait(true) (or just not write it because this is
+the default).
+
+In case you write a library code, which other componets would use it, probably you should do use the 
+ConfigureAwait(false). Lets look at the next method:
+
+private async Task DoWorkAsync()
+{
+	Console.WriteLine("Before Task.Delay");
+
+	await Task.Delay(TimeSpan.FromMilliseconds(500)).ConfigureAwait(false);
+
+	Console.WriteLine("Before Task.Delay");
+}
+
+If someone uses the DoWorkAsync, it should call ConfigureAwait(false);
+Lets see what is the risk when you do not use the ConfigureAwait(false), i.e:
+
+private async Task DoWorkAsync()
+{
+	Console.WriteLine("Before Task.Delay");
+
+	await Task.Delay(TimeSpan.FromMilliseconds(500));
+
+	Console.WriteLine("Before Task.Delay");
+}
+
+In case someone else call that DoWorkAsync method, and it do not use the await keywork for some reason, like the next example:
+
+private async Task Button_Click(object sender, RoutedEventArgs e)
+{
+	Console.WriteLine("Before DoWorkAsync");
+
+	var task = LibClass.DoWorkAsync();
+	task.Wait();
+
+	Console.WriteLine("After DoWorkAsync");	
+	button.Background = new SolidColorBrush(Color.HotPink);
+}
+
+We will be stuck, the UI will wait for itself and that is a deadlock.
+
+Lets understand how that is possible:
+
+We start executing the Button_Click method. We get into the DoWorkAsync and running synchronously until we reach the 
+'await Task.Delay(TimeSpan.FromMilliseconds(500));' line. In that 500 MS, the scheduler will search for another available
+thread to run. Since the thread in Button_Click is available, it will reach to 'task.Wait();' and will block and wait until
+the DoWorkAsync task will finish. After the 500 MS finished, the continuation task, which is the printing of
+'Console.WriteLine("Before Task.Delay");' should be run on the UI thread, but since it is occupied by the Button_Click method,
+it will wait until it will be availabe. That will never happen, since they both wait for each other. Deadlock.
