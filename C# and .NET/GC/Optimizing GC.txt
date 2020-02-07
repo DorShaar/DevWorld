@@ -1,0 +1,18 @@
+Taken main poinds from article https://medium.com/swlh/optimizing-garbage-collection-in-a-high-load-net-web-service-3bb620b444a7
+
+PerfView is a good tool for Windows to trace .Net applications. One of the tracers is GC.
+
+Object larger than 85000 bytes are created in LOH - Large object heap. Such object creation is not like garbage collecting, since creating it requires
+only one thread (which runs "in the background").
+
+Those large objects automatically goes to Gen 2.
+
+To overcome that, we can use ArrayPool<T> which is a class to hold
+objects and prevent the pressue on the garbage collector.
+
+ArrayPool Remarks frmo docs.microsoft:
+Using the ArrayPool<T> class to rent and return buffers (using the Rent and Return methods) can improve performance in situations where arrays are 
+created and destroyed frequently, resulting in significant memory pressure on the garbage collector.
+
+In case the object is larger than 85000 bytes, still using ArrayPool will take the object to gen 2. Therefore the author of the article implemented
+ChunkedList<T> which holds whole objects while they are less than 85000 bytes, and splitted objects when they are exceed 85000 bytes.
