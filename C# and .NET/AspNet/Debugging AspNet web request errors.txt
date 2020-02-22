@@ -1,0 +1,59 @@
+Debugging AspNet web request errors:
+Based on article https://michaelscodingspot.com/debugging-asp-net-web-request-errors/?utm_source=csharp&utm_medium=email&utm_campaign=digest
+
+There are several ways to debug request error for better understanding what went wrong and why.
+
+1. Postman is nice tool for sending requests.
+
+2. On error, there is an option in Asp.Net to show on the web the exception which ocurred. That may be applied by adding in the "startup.cs"
+	the next line:
+	public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+	{
+	    if (env.IsDevelopment())
+	    {
+	        app.UseDeveloperExceptionPage();
+	    }
+
+	    // ...
+	}
+
+3. For windows users: Windows has a built-in logging system called Windows Event Log. Whenever there’s a failed request, it’s logged automatically. To inspect it, open Event Viewer by typing “Event
+	Viewer” in the start menu or using the command eventvwr from the command promp.
+
+4. Using middlewares:
+	ASP.NET Core’s middleware system is great for exception handling. You can easily create code that’s triggered when a request fails with an exception. It’s as simple as this:
+
+	public class ErrorLoggingMiddleware
+	{
+	    private readonly RequestDelegate _next;
+	 
+	    public ErrorLoggingMiddleware(RequestDelegate next)
+	    {
+	        _next = next;
+	    }
+	 
+	    public async Task Invoke(HttpContext context)
+	    {
+	        try
+	        {
+	            await _next(context);
+	        }
+	        catch (Exception e)
+	        {
+	            // Use your logging framework here to log the exception 
+	            throw;
+	        }
+	    }
+	}
+	 
+
+	Make sure to register the middleware:
+
+	public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+	{
+	    // ...
+
+	    app.UseMiddleware<ErrorLoggingMiddleware>();
+
+	    // ...
+	}
