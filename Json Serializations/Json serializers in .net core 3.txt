@@ -1,0 +1,1 @@
+https://michaelscodingspot.com/the-battle-of-c-to-json-serializers-in-net-core-3/
