@@ -1,0 +1,45 @@
+Based on the book Restful Web Services Cookbook.
+
+Rest requests are the operation like "create", "delete", "update" and so on, on resources.
+
+Http request semantic is
+OPERATION BaseAddress/Resource/id.
+
+Most of the time, resource name will be in plural. That means that if your resource holds books, it will be called "books" or "bookRequests".
+
+GET:
+Get request does not change state, therefore it called safe.
+To request for one resource, you perform "GET BaseAddress/Resource/id"
+To request for one all resources, you perform "GET BaseAddress/Resource"
+
+POST:
+Post request usually creates new resource.
+You may create new resource by "POST BaseAddress/Resource".
+
+PUT:
+Put request updated a resource.
+To update specific resource, you perform "PUT BaseAddress/Resource/id".
+To update a whole group of resources, you perform "PUT BaseAddress/Resource".
+
+DELETE:
+Delete requests deletes specific item in resource.
+To delete specific resource, you perform "DELETE BaseAddress/Resource/id".
+To drop a whole group of resource, you perform "DELETE BaseAddress/Resource"
+
+PATCH:
+Patch request is like PUT request but with specific parameters. It does not replaces the whole resource but specific part of it.
+
+
+Patterns:
+
+Use POST for asynchronous tasks:
+Lets say you use the post http request but the server must take a lot of time to complete the request. An example for that is bank deposit - you get an immediate response but the money will be at your account only in the nexy business day. That is an example for long taking operation time. The reaponse 
+should be 202 "accepted" with the reference for a resource that the client may check it up later for status.
+
+	When the client submits a GET request to the task resource, do one of the following, depending on the current status of the request:
+	Still processing - Return response code 200 (OK) and a representation of the task resource with thecurrent status.
+	On successful - completion. Return response code 303 (See Other) and a Location header containing a URI ofa resource that shows the outcome of the task.
+	On task failure - Return response code 200 (OK) with a representation of the task resource informing that the resource creation has failed. Clients will need to read the body of the representation to find the reason for failure.
+
+Use DELETE for asynchronous tasks:
+Must return 202 (accepted) with a resource to look it up on GET request and on the resource will contain the deletion status.
