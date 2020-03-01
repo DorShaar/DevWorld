@@ -44,6 +44,9 @@ to fix and the more it costs.
 That’s why the fail-fast principle encourages us to fail fast and early: If an error occurs, fail immediately and visibily.
 If something unusually or unexpectedly occurs, let the software fail immediately instead of postponing the failure or working around the failure.
 
+A well-defined interface does not offer very many aunctions to depend upon, so coupling is low. A poorly defined interface
+provides lots of functions that you must call, so coupling is high.
+
 Q: Should we return null or throw an exception?
 A: Only throw an exception if it is truly an error. If it is expected behavior for the object to not exist, return the null. 
 Otherwise it is a matter of preference. As a general rule, if the method should alwaysreturn an object, then go with the exception.
