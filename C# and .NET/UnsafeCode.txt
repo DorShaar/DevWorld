@@ -1,0 +1,15 @@
+What functionality does the stackalloc keyword provide? When and Why would I want to use it?
+
+public unsafe void DoSomeStuff()
+{
+    byte* unmanaged = stackalloc byte[100];
+    byte[] managed = new byte[100];
+
+    //Do stuff with the arrays
+
+    //When this method exits, the unmanaged array gets immediately destroyed.
+    //The managed array no longer has any handles to it, so it will get 
+    //cleaned up the next time the garbage collector runs.
+    //In the mean-time, it is still consuming memory and adding to the list of crap
+    //the garbage collector needs to keep track of.
+}
