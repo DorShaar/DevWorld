@@ -1,0 +1,20 @@
+Here we have an example for creating storage mount from kubernetes deployment to the hosting node.
+
+In the deployment.yaml we can see we have nginx app with 3 replicas, i.e. 3 pods.
+Under spec.template.spec.containers we have volumeMounts with path of /usr/local/share/app and has the name "app-storage1".
+Under spec.template.spec we have volumes, which contains persistentVolumeClaim with the name of app-volume-claim-x1. The volume name is "app-storage1", so
+	in that way we can understand that the storage in from app-volume-claim-x1 is mounted to path /usr/local/share/app in every one of the three pod replicas.
+
+Now we ask, what is app-volume-claim-x1? where is it declaired?
+Let's look over the pv and pvc yamls.
+
+Looking at pv.yaml, there is a request for volume, named "app-volume", of 10 Gi, in the hosting machine on path "/mnt/app/". It is in the
+hosting machine since the type is local.
+
+So with that pv.yaml applied, there are 10 Gi that should be allocated in the hosting node in "/mnt/app/".
+
+Now we ask, who will take it? who use it?
+
+Looking at pvc.yaml, we can see a volume claim with the name of app-volume-claim-x1. Ha! that is the same name in the deployment! So now we can see (after 
+applying pcd.yaml) that every file in pod under the path /usr/local/share/app will be also in the node under /mnt/app/.
+Also we can see that the claim is only for 3Gi.
