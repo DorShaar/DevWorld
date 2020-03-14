@@ -1,0 +1,34 @@
+The control plane is assembled from 4 components:
+
+kube-api-server
+kubve-controller-manager
+kube-scheduler
+etcd
+
+diagram for control plane:
+
+etcd----------------Api Server
+				   /	|
+				  /		|
+			   	 /		|		
+				/		|
+		Scheduler 		Control Manager
+
+
+When Worker Node would like to communicate with the Master Node, i.e. the control plane, it is beeing done via the kube-api-server. That is the only component the is public from the control plane.
+
+etcd:
+Consistent and highly-available key value store used as Kubernetes’ backing store for all cluster data.
+
+kube-scheduler:
+Control Plane component that watches for newly created pods with no assigned node, and selects a node for them to run on.
+
+Factors taken into account for scheduling decisions include individual and collective resource requirements, hardware/software/policy constraints, affinity and anti-affinity specifications, data locality, inter-workload interference and deadlines.
+
+kube-control-manager:
+Runs controllers processes, which include:
+	Node Controller: Responsible for noticing and responding when nodes go down.
+	Replication Controller: Responsible for maintaining the correct number of pods for every replication controller object in the system.
+	Endpoints Controller: Populates the Endpoints object (that is, joins Services & Pods).
+	Service Account & Token Controllers: Create default accounts and API access tokens for new namespaces.
+

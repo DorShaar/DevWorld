@@ -1,0 +1,50 @@
+What is Ingress?
+Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. Traffic routing is controlled by rules defined on the Ingress resource.
+
+    internet
+        |
+   [ Ingress ]
+   --|-----|--
+   [ Services ]
+
+
+In Kubernetes, an Ingress is an object that allows access to your Kubernetes services from outside the Kubernetes cluster. You configure access by creating a collection of rules that define which inbound connections reach which services. This lets you consolidate your routing rules into a single resource.
+
+You must have an ingress controller to satisfy an Ingress. Only creating an Ingress resource has no effect.
+
+The ingress controller is decided in the metadata.annotations section.
+
+
+Example (based on https://www.youtube.com/watch?v=VicH6KojwCI):
+Lets say we have have online store, with service of 3 pod of wearing, and another services of 3 pods of video streaming.
+each of the services type is exported by load balancer. It looks like that
+
+	www.my-online-store.com
+							/wearing -> load-balancer-1
+							/video   -> load-balancer-2
+							
+			-------------->load-balancer<------------
+			|										|
+		load-balancer-1						load-balancer-2
+			^										^
+			|										|
+		Exported by port 38080				Exported by port 38282
+
+		WearService (LoadBalancer)			videoService (LoadBalancer)
+
+
+WearPod1	WearPod2	WearPod3	VideoPod1	VideoPod2	VideoPod3
+
+
+In What ingress help us?
+
+Ingress may replace the load-balancing, the application may look like that:
+
+www.my-online-store.com
+
+				-------------->INGRESS<--------------
+				|									|
+			WearService						videoService
+
+
+WearPod1	WearPod2	WearPod3	VideoPod1	VideoPod2	VideoPod3
