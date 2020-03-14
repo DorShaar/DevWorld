@@ -1,0 +1,43 @@
+The problem we deal it is that we have several services, lets say ServiceA, ServiceB and ServiceC, each one of them has different ip address and different port. How the client service (the API server or
+another service) discovers the location of a wanted service instance?
+
+We should take in consideration that the services address might change, therefore the search for location must be dynamic.
+
+We have two patterns for that problem, Client Side Discovery and Server Side Discovery.
+
+Client Side Discovery:
+
+When making a request to a service, the client obtains the location of a service instance by querying a Service Registry, which knows the locations of all ServiceAservice instances.
+
+diagram:
+
+ServiceClient									ServiceA
+												ServiceB
+												ServiceC
+				Service Registry
+
+Service Registry is updated by each Service that wants to be known by the public (aka ServiceClient).
+If ServiceA changes it's IP address, it must unregister the old IP and register the new one with the Service Registry.
+
+Example:
+ServiceClient would like to send a message to ServiceB. It sends a query to the ServiceRegistry "What's the address of ServiceB?". ServiceClient replied by the ServiceRegistry that the ip is 10.4.3.99:5454 (for example) and after that the ServiceClient sends a request (a message) the that ip address.
+
+In that pattern the ServiceClient must know the ServiceRegistry, i.e. they are decoupled.
+
+
+Server Side Discovery:
+
+That pattern is almost the same as the above. The difference is that the ServiceClient does not know about the Service Registry and does not do the quaries. Instead of that, a router does that job.
+
+diagram:
+
+ServiceClient		Router									ServiceA
+															ServiceB
+															ServiceC
+				Service Registry
+
+Service Registry is updated by each Service that wants to be known by the public (aka ServiceClient).
+If ServiceA changes it's IP address, it must unregister the old IP and register the new one with the Service Registry.
+
+Example:
+ServiceClient would like to send a message to ServiceC, it sends the router a request with message and destination service. The router figures out what is the address of ServiceC by quering the ServiceRegistry, and sends the message to the ServiceC's address. The Router wait for response and updated ServiceClient with ack (acknowledge) response.
