@@ -1,0 +1,59 @@
+Based on article from https://medium.com/swlh/what-is-middleware-in-asp-net-core-and-how-important-is-it-3021d4fb90d2
+
+Middleware is components of an application that examine the requests responses coming into and coming out from an ASP.NET Core application. In other words, it’s the layer that every request and response have to go through.
+
+The below diagram illustrates the typical order of middleware layers in an ASP .NET Core web application. The order is very important, so it is necessary to understand the placement of each request delegate in the pipeline.
+
+Request -->   Middlewaare 1			Middlewaare 2  		 Middlewaare 3
+
+			  // logic			
+
+			  next(); ---------->	// logic	
+
+			  						next(); ---------->	// logic
+
+			  											// more logic
+			  											|
+									// more logic<------|			  								
+								    |
+			  // more logic<--------|
+				  |
+Response<---------|
+
+
+How it works?
+When an HTTP request comes in, the first request delegate handles that request. It chooses either passing the request on to the next component in the pipeline or performing certain actions before and after the next component is invoked in the pipeline. It allows unnecessary work to be avoided. This is very useful in some scenarios like handling exceptions before anything else or serving static files.
+
+The returned response travels back in the reverse direction back through the pipeline. This allows each component to run code both times: when the request arrives and also when the response is on its way out.
+
+
+Built-In Middlewares:
+
+I will show you, how the built-in middleware works and why the order is important.
+Note: We should use the “Use” prefix naming convention when we create new custom Middleware. For example: UseFileUploadErrorPage, UseDebugErrorPage,…
+
+1. Exception Handling:
+- UseDeveloperExceptionPage() & UseDatabaseErrorPage(): used in development phase to catch run-time exceptions.
+- UseExceptionHandler(): used in production for run-time exceptions
+Calling these methods first ensures that exceptions are caught.
+
+2. HSTS & HTTPS Redirection:
+- UseHsts(): used in production to enable HSTS (HTTP Strict Transport Security Protocol) and enforce HTTPS.
+- UseHttpsRedirection(): forces HTTP calls to automatically redirect to equivalent HTTPS addresses.
+Calling these methods next ensure that HTTPS can be enforced before resources are served from a web browser.
+
+3. Static files:
+- UseStaticFiles(): used to enable static files, such as HTML, JavaScript, CSS and graphics files.
+This Middleware is called early on to avoid the need for authentication, session or MVC middleware.
+
+4. Cookie Policy:
+- UseCookiePolicy(): used to enforce cookie policy and display GDPR-friendly messaging
+
+5. Authentication, Authorization & Sessions:
+- UseAuthentication(): used to enable authentication and then subsequently allow authorization.
+- UserSession(): manually added to the Startup file to enable the Session middleware.
+Calling these after cookie authentication (but before the MVC middleware) ensures that cookies can be issued as necessary and that the user can be authenticated before the MVC engine kicks in.
+
+6. MVC & Routing:
+- UseMvc(): enables the use of MVC in your web application, with the ability to customize routes for your MVC application and set other options.
+- routes.MapRoute(): set the default route and any custom routes when using MVC.
