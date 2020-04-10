@@ -1,0 +1,75 @@
+From https://techdifferences.com/difference-between-hard-link-and-soft-link.html
+
+Difference Between Hard link and Soft link
+
+hard link vs soft linkThe links in Unix are essentially the pointers which associate to the files and directories. The major difference between a hard link and soft link is that hard link is the direct reference to the file whereas soft link is the reference by name which means it points to a file by file name.
+
+ 
+Hard link links the files and directories in the same file system, but the Soft link can traverse file system boundaries.
+
+Before understanding links we should first understand inode, an inode is a data structure comprised of metadata about the file such as file creation date, file authorizations, owner of the file and more.
+
+ 
+Definition of Hard link:
+	Hard links directly link two files in the same file system and for identification it uses file’s inode number. Hard links cannot be implemented on directories (since they point to inode). When “ln” command is utilized to generate a hard link, it creates another file on the command line which can be used to refer the original file. Both the original and generated file have the same inode and content; hence they will have the same permissions and the same owner.
+
+	The removal of the original file does not influence the hard linked file, and a hard linked file will remain.  The inode holds a counter, to computes the number of hard links to itself. When the counter indicates 0 value, then the inode is emptied. Whenever you make any changes to the hard link, it will imitate in the original file.
+
+Definition of  Soft link:
+	Soft links are usually an alternative path (or an alias) for the original file; these are also referred to as symbolic links. It includes the name of the link’s “target file”, flag which specifies that it is a soft link. When a file is accessed the soft link redirects it to the target file through the path written in the subject of the soft link.
+
+	These are very handy in case of windows OS where the soft link behaves as shortcuts. Creation and deletion of the soft links do not affect the original file. If the target file is deleted the soft link dangles which means it points nowhere and generates an error message when the target file is accessed. Soft links do not use inode number, unlike hard link. An absolute or a relative path could be a part of the symbolic links.
+
+
+Key Differences Between Hard link and Soft link:
+	A hard link is an additional name of the original file which refers inode to access the target file. In contrast, soft link is distinct to the original file and is an alias to original file but do not uses inode.
+	When an original file gets deleted soft link becomes invalid whereas, a hard link is valid even if the target file is deleted.
+	In Linux, the command used for the creation of hard link is “ln“. As against, the command used for a soft link is “ln -s“.
+	Hard link has same inode number dissimilar to soft link, where target file and its soft link have distinct inode number.
+	Hard links are restricted to its own partitions, but soft links can cover different file systems.
+	The performance of hard link is better than soft link in some cases.
+	Relative path and absolute path both are allowed in soft links. On the contrary, the relative path is not allowed in a hard link.
+
+Conclusion:
+	A hard link doesn’t requires extra space and mat resolve faster, but the changes applied to a hard link reflect in the original file. On the other hand, Soft link needs extra space but any change in the soft link doesn’t impact the original file. Soft links are allowed to directories unlike to Hard link.
+
+
+
+Me playing in Linux:
+Created "target.txt" file with line "this is original target line" and create hard link (ln) and soft link (ln -s).
+
+The ls -li command shows also the inode number at the beginning.
+
+	dorshaar@DorSh-LP:~$ ls -li target/target.txt
+	21955048184628645 -rw-rw-rw- 2 dorshaar dorshaar 29 Apr 10 16:52 target/target.txt
+	dorshaar@DorSh-LP:~$ ls -li hardlink/hardlink.txt
+	21955048184628645 -rw-rw-rw- 2 dorshaar dorshaar 29 Apr 10 16:52 hardlink/hardlink.txt
+	dorshaar@DorSh-LP:~$ ls -li softlink/softlink.txt
+	27021597765422467 lrwxrwxrwx 1 dorshaar dorshaar 17 Apr 10 16:54 softlink/softlink.txt -> target/target.txt
+
+We can see that the hard link has the same node number as the target, while the soft link has different inode number.
+
+After I replaced the target file with echo "this is another target line" > target.txt
+
+	dorshaar@DorSh-LP:~$ ls -li target/target.txt
+	21955048184628645 -rw-rw-rw- 2 dorshaar dorshaar 32 Apr 10 16:58 target/target.txt
+	dorshaar@DorSh-LP:~$ ls -li hardlink/hardlink.txt
+	21955048184628645 -rw-rw-rw- 2 dorshaar dorshaar 32 Apr 10 16:58 hardlink/hardlink.txt
+	dorshaar@DorSh-LP:~$ ls -li softlink/softlink.txt
+	27021597765422467 lrwxrwxrwx 1 dorshaar dorshaar 17 Apr 10 16:54 softlink/softlink.txt -> target/target.txt
+
+	dorshaar@DorSh-LP:~$ cat target/target.txt
+	Now I change the line of target
+	dorshaar@DorSh-LP:~$ cat hardlink/hardlink.txt
+	Now I change the line of target
+	dorshaar@DorSh-LP:~$ cat softlink/softlink.txt
+	cat: softlink/softlink.txt: No such file or directory
+
+We can see that the soft link is not valid anymore.
+
+Now I will delete the original file, it results:
+
+	The hard link was not changed, it still exists.
+
+My conclusion:
+	In terms of windows, soft link is a shortcut - at the bottom line it different path the the same target file. Hard link is a combination of copy and shortcut - hard link is mirrored to the target file (and vise versa). If we change the content in one of the hard links or the target file, every one will change. If we will delete one of them, the rest will be uneffected. The change will be only in the link counter found in the ls -l command.
