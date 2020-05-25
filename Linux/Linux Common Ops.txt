@@ -31,3 +31,33 @@ packages info:
 		dpkg -L <package name>
 
 files permissions: https://www.linux.com/learn/understanding-Linux-file-permissions
+
+Show Linux users:
+	cat /etc/passwd
+
+	Each line in the file has seven fields delimited by colons that contain the following information:
+
+	1. User name.
+	2. Encrypted password (x means that the password is stored in the /etc/shadow file).
+	3. User ID number (UID).
+	4. User’s group ID number (GID).
+	5. Full name of the user (GECOS).
+	6. User home directory.
+	7. Login shell (defaults to /bin/bash).
+
+Show Paths:
+	$PATH
+
+Add path to Paths:
+	export PATH="$PATH:<directory/file path>"
+	example: export PATH="$PATH:/root/.dotnet/tools"
+
+Show proccess:
+	ps aux
+
+	a = show processes for all users
+	u = display the process's user/owner
+	x = also show processes not attached to a terminal
+
+Check Architecture, CPU mode:
+	lscpu
