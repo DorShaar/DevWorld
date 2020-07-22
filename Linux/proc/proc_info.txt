@@ -1,0 +1,10 @@
+To be able to see the cpu information, you can run
+	cat /proc/cpuinfo
+
+
+To be able and watch process info, you need to know the process number/name which you want to view
+	ls /proc
+To view the mapping of the addresses, you can:
+	cat /proc/<process_number>/maps
+to view it more deatiled:
+	cat /proc/<process_number>/smaps
