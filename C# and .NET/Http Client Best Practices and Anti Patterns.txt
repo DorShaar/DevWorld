@@ -1,0 +1,79 @@
+Here we will learn best practices and anti patterns of .Net Http Client.
+
+Based on article: https://www.thecodebuzz.com/using-httpclient-best-practices-and-anti-patterns/
+
+Here we will learn HttpClient usage best practices and guidelines. We will understand that by following best practices, we can avoid a common problem of Resource exhaustion, stale DNS, Memory leaks or network activity issues while using HttpClient objects. A static shared instance or using HttpClientfactory are the recommended way to use the HTTPClient object in the application.
+
+HttpClient is a very important class in the .NET/.NET Core ecosystem. HttpClient is designed as a shared instance which is also a thread-safe if used properly.
+
+HttpClient class design as a broker that clients can use to access the resource over the network.
+
+Example for an AntiPattern:
+
+[HttpGet]
+public IActionResult BadMethod()
+{
+   var httpClientHandler = new HttpClientHandler()
+   {
+       Credentials = new NetworkCredential("user", "****"),
+   };
+
+   using HttpClient httpClient = new HttpClient(httpClientHandler);
+
+   HttpResponseMessage response = httpClient.GetAsync("http://thecodebuzz.com/api").Result;
+  
+   return Ok(response.Content.ReadAsStringAsync().Result);
+}
+
+In the above example, the HttpClient object is being created for each request.
+Also, each time the httpClient is disposed, which cause the GC to work harder - allocate and dispose httpClient resource each call.
+On heavy load that is exausting for the application. The issues from the above example are:
+
+1. Each new HTTPClient object creates a new socket instance.
+2. Instantiating HTTPClient objects for each request might exhaust the number of sockets available under heavy loads.
+3. HTTPClient object doesn’t release the sockets immediately even if it is called using “using” (IDisposable) block.
+   May leads to SocketExceptions.
+4. Singleton or Static HTTPClient objects as specified above should help to resolve the most issues.
+5. In .NET Core, it was found that Singleton or Static HTTPClient object doesn’t respect the DNS update or change in the .NET core resulting in Stale DNS problem.
+
+Example 1 for resolution:
+
+It’s recommended creating a single static HttpClient instance per Controller level and use the same shared instance for all requests.
+HttpClient is designed to be thread-safe and intent to be shared.
+
+[Route("api/[controller]")]
+[ApiController]
+public class PaymentController : ControllerBase
+{
+
+static readonly HttpClient client = new HttpClient();
+
+	[HttpGet]
+	public IActionResult Get()
+	{
+	    HttpClientHandler httpClientHandler = new HttpClientHandler()
+	    {
+	        Credentials = new NetworkCredential("username", "****"),
+	    };
+
+	    HttpResponseMessage response = client.GetAsync("http://thecodebuzz.com/api/").Result;
+	    return Ok(response.Content.ReadAsStringAsync().Result);
+	}
+}
+
+Example 2 for resolution:
+
+Let’s create a HttpClient instance using HttpClientFactory.(Available only in .NET Core 2.1 and above).
+
+Using HTTPClientFactory resolves the Resource exhaustion problems by pooling HTTPMessageHandler.
+
+It also solves Stale DNS problems by cycling HTTPMessageHandler instances at regular intervals.
+
+Basic or Named HttpClient object.
+
+
+Other Main Characteristic of HTTPClient:
+
+1. HttpClient is designed to be shared. So the application should store it and reuse it as required, instead of disposed or re-created. 
+2. HttpClient is designed as a threadsafe.
+3. HttpClient class design as a broker that clients can use to access the resource.
