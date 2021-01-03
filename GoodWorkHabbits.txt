@@ -1,0 +1,42 @@
+Here I will list good working habbits that should make the work much more effective.
+
+Working process:
+1. Got to solve bug - we should ask ourselves what is the user harm? Do we have analytics
+	for it? That way we can sense the priority of the bug.
+	
+2. Does that bug requires investigation or acquiring more knowledge?
+	If so, Start read, investigate. If another companion can share knowledge or have
+	another pair of eyes - that would be great.
+	About that knowledge we gethered - share it - it will make your teamates more
+	educative.
+	
+	If investigation is not required, start planning your bug.
+	
+3. Plan your bug - Ask yourself the next questions:
+	- Do we have enough samples that the bug occure with? It will let us know if we should
+	collect samples.
+	- Do we have UT / e2e test on the bug? We should add the case of that bug to an e2e or
+	Unit test, but the question is if the test is already written and all you have to do
+	is to add your case, or write the e2e / UT from scratch.
+	- Think about the reviewer. Is the expected change should take your reviewr longer time
+	than 10 min?
+	- Define your Definition of Done. What criteria makes the bug be done.
+	
+4. Implement. Your implementation should have the next things:
+	- Clean code, but don't refactor.
+	- Implement / add your case to e2e and UTs.
+	- In case your implementation depends on 3rd parties, consider not to. It depends
+	if that 3rd party is trustfull or not. Maybe you can implement it on your own?
+	It depends.
+	- Collect samples from the internet / customer.
+	- Think about different cases your product might have.
+	
+5. Self testing. It is important to self test before send to QA team, if you have such.
+	That will reduce time when QA will find bug that you could find it yourself. Probably
+	when that case will come back to you, you will work on another case. Context switching
+	should be minimal if you wish to work productive.
+	
+6. Deliver to QA. You should make sure QA know how to test your case. Even if it is QA, they
+	might miss few things and not have the right samples, so you can help them, without
+	influance their tests on that case.
+	
