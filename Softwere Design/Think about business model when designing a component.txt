@@ -1,0 +1,50 @@
+When designing, we should think not about single responsibility of the information, but on the business side.
+
+Instead of creating a modle for product service that does all the relevent operations for the service, like that:
+
+public interface IProductService
+{
+    Task<Product> GetProductBySku(string sku);
+    Task<Product> GetProductForSaleBySku(string sku);
+    Task<List<Product>> GetProducts();
+    Task UpdateProductInfo();
+    Task IncreasePrice(string sku, decimal price);
+    Task DecreasePrice(string sku, decimal price);
+    Task IncreaseCost(string sku, decimal cost);
+    Task DecreaseCost(string sku, decimal cost);
+    Task ShipProduct(string sku, Guid salesOrderId);
+    Task ReceiveProduct(string sku, Guid purchaseOrderId);
+    Task AdjustInventory(string sku, int quantity);
+}
+
+
+Design it with consideration for the business side:
+
+public interface ICatalogService
+{
+    Task<Product> GetProductBySku(string sku);
+    Task<Product> GetProductForSaleBySku(string sku);
+    Task<List<Product>> GetProducts();
+    Task UpdateProductInfo();
+}
+
+public interface ISalesService
+{
+    Task IncreasePrice(string sku, decimal price);
+    Task DecreasePrice(string sku, decimal price);
+}
+
+public interface IPurchasingService
+{
+    Task IncreaseCost(string sku, decimal cost);
+    Task DecreaseCost(string sku, decimal cost);
+}
+
+public interface IWarehouseService
+{
+    Task ShipProduct(string sku, Guid salesOrderId);
+    Task ReceiveProduct(string sku, Guid purchaseOrderId);
+    Task AdjustInventory(string sku, int quantity);
+}
+
+Because probably your product is handled sales and purchasing by different people.
