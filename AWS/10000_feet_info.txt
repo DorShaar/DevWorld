@@ -1,0 +1,18 @@
+AZ - Availability Zone:
+	Distinct location from within AWS region that is engineered to be isolated
+	from failures.
+
+AWS region:
+	A region is a geographic area that consists of different Availability Zones.
+	Each region has at least two abailabilities zones.
+	It consists an independent AWS computing resources.
+
+AWS VPC:
+	Vitrutal private cloud - networking service.
+
+Elastic Beanstalk:
+	A service which specifically designed to run a developer's code on an infrastructure that is automatically provisioned to host the code.
+
+Route 53:
+	Highly scaleable DNS service.
+
