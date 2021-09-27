@@ -1,0 +1,35 @@
+Process:
+	A process is an instance of computer program that is being executed by one or many threads.
+	Process is contained from:
+		1. Code loaded into the memory.
+		2. Process registers, program counter - in charge of the state of the exectuation.
+		3. Stack - hold temporary information (local variables, parameters functions..)
+		4. Data section - contains global variables.
+		5. Heap - Hold dynamic memory allocated during the program.
+
+
+Thread:
+	Thread is a sequence of programmed instructions. A thread executation is running according to the OS's scheduler.
+
+
+How many threads can run in parrallel?
+	It depends on how many CPUs the computer has. Also, it depends how many core units each CPU has. Also, it depends on how many execution units each core unit has. To summarize, the number of parralel threads that can run in the same time unit are:
+	CPUs * Cure Units each CPU has * Execution Units each CPU has.
+
+	For example, we have a machine with 3 CPUs, each CPU has 5 cores and each core have 2 execution unit, we can run 3*5*2=30 threads in parallel.
+
+	Remark: We should take into consideration that there are also operation system threads that should run, and maybe other processes with one or more threads that are running beside your application, so don't expect from your application to run 100% of the time for all your threads in parralel.
+
+
+How to run many process by single application (Like chrome?)
+	A process can have child process. It can be done by fork system call (Unix) or spawn sytem call (Windows).
+
+
+What proccess share?
+	Typically with modern operating systems, when another process is forked from the first (parent), they share the same memory space with a copy-on-write set on all pages. Any updates made to any of the read-write memory pages causes a copy to be made for the page so there will be two copies and the memory page will no longer be shared between the parent and child process. This means that only read-only pages or pages that have not been written to will be shared.
+
+	If a process has not been forked from another then they typically do not share any memory. One exception is if you are running two instances of the same program then they may share code and maybe even static data segments but no other pages will be shared.
+
+
+What threads share?
+	Threads share all of the process's segmants expect the stack.
