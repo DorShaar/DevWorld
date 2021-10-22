@@ -159,12 +159,17 @@
 			}
 		}
 	],
-	"duringWork": {
-		"helper1": ["requiresLearning", "idNeeded, try share information prior to start writing code, in order to get feedback from experienced co-workers"],
-		"helper2": ["cleanCode", "Clean code but don't refactor. It may be difficult for your reviewer to observe your changes"],
-		"helper3": ["TDD", "Try writing your tests before writing your code"],
-		"helper4": ["Avoid dependencies", "If you can implement it without the fear of bugs, try avoid dependencies so we won't be dependant on 3rd parties fixes"],
-		"todo": ["show the user all the relevant parameters he wrote. For example: 'collect samples'"],
-		"logTest": ["Test your logs, make sure everything is as expected"]
+	"WorkNotes": {
+		"KnowledgeShare": ["Share the information you learn or already know prior to implementation phase in order to get feedback from experienced co-workers",
+			"Studied something new? Implemented new feature? Write something about it so anyone can know (Confluence, Miro..)"],
+		"PullRequests": ["Clean your code but don't refactor. It may be difficult for your reviewer to observe your changes"],
+		"TestDrivenDesign": ["Try writing your tests before writing your code"],
+		"CodeImplementation": ["Try avoid dependencies as much as you can, but consider how bug prone will your code be."],
+		"WorkFlow": ["Tend to a CI/CD work (Continuous integration and delivery), so you can deliever, even partial implementation, to the benefit of the customer.",
+			"Let your system run with a new feature before delivering it to the customer. At least the most obvious bugs will appear first",
+			"Avoid Best-Effort implemenation, try be focused on the customers needs instead",
+			"In dailies or weeklies share your progress in few sentences instead of telling 'I'm in progress'"],
+		"WorkTriangle": ["Plan your task according to a time-resource-content triangle",
+			"When raising a flag, be prepared with a different triangle"]
 	}
 }
