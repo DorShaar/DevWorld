@@ -1,0 +1,4 @@
+run -> regedit
+Computer\HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\Outlook\Security
+add new string value: Level1Remove
+add data: .exe;.url;pif

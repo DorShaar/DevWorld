@@ -1,0 +1,6 @@
+ReDos:
+	When using Regex - It has natural volnerability if ReDos attack (Regular Expression Denial Of Service) - making Regex search work for long time.
+	The solution is to define timeout for the regex search.
+
+LINQ:
+	It easy to not pay attantion and make double enumeration. When using LINQ, make sure enumeration is efficient as possible.

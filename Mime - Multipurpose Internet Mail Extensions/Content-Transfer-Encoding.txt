@@ -1,0 +1,51 @@
+Based on https://stackoverflow.com/questions/25710599/content-transfer-encoding-7bit-or-8-bit:
+
+It can be a bit dense to read, but the "Content-Transfer-Encoding" section of RFC 1341 has all of the details:
+
+http://www.w3.org/Protocols/rfc1341/5_Content-Transfer-Encoding.html
+
+The situation kinda goes from bad to worse. Here's my summary:
+
+Background
+	SMTP, by definition (RFC 821), limits mail to lines of 1000 characters of 7 bits each. That means that none of the bytes you send down the pipe can have the most significant ("highest-order") bit set to "1".
+
+	The content that we want to send will often not obey this restriction inherently. Think of an image file, or a text file that contains Unicode characters: the bytes of these files will often have their 8th bit set to "1". SMTP doesn't allow this, so you need to use "transfer encoding" to describe how you've worked around the mismatch.
+
+	The values for the Content-Transfer-Encoding header describe the rule that you've chosen to solve this problem.
+
+7Bit Encoding:
+	7bit simply means "My data consists only of US-ASCII characters, which only use the lower 7 bits for each character." You're basically guaranteeing that all of the bytes in your content already adhere to the restrictions of SMTP, and so it needs no special treatment. You can just read it as-is.
+
+	Note that when you choose 7bit, you're agreeing that all of the lines in your content are less than 1000 characters in length.
+
+	As long as your content adheres to these rule, 7bit is the best transfer encoding, since there's no extra work necessary; you just read/write the bytes as they come off the pipe. It's also easy to eyeball 7bit content and make sense of it. The idea here is that if you're just writing in "plain English text" you'll be fine. But that wasn't true in 2005 and it isn't true today.
+
+8Bit Encoding:
+	8bit means "My data may include extended ASCII characters; they may use the 8th (highest) bit to indicate special characters outside of the standard US-ASCII 7-bit characters." As with 7bit, there's still a 1000-character line limit.
+
+	8bit, just like 7bit, does not actually do any transformation of the bytes as they're written to or read from the wire. It just means that you're not guaranteeing that none of the bytes will have the highest bit set to "1".
+
+	This seems like a step up from 7bit, since it gives you more freedom in your content. However, RFC 1341 contains this tidbit:
+
+	As of the publication of this document, there are no standardized Internet transports for which it is legitimate to include unencoded 8-bit or binary data in mail bodies. Thus there are no circumstances in which the "8bit" or "binary" Content-Transfer-Encoding is actually legal on the Internet.
+
+	RFC 1341 came out over 20 years ago. Since then we've gotten 8bit MIME Extensions in RFC 6152. But even then, line limits still may apply:
+
+	Note that this extension does NOT eliminate the possibility of an SMTP server limiting line length; servers are free to implement this extension but nevertheless set a line length limit no lower than 1000 octets.
+
+Binary Encoding:
+	binary is the same as 8bit, except that there's no line length restriction. You can still include any characters you want, and there's no extra encoding. Similar to 8bit, RFC 1341 states that it's not really a legitimate encoding transfer encoding. RFC 3030 extended this with BINARYMIME.
+
+Quoted Printable:
+	Before the 8BITMIME extension, there needed to be a way to send content that couldn't be 7bit over SMTP. HTML files (which might have more than 1000-character lines) and files with international characters are good examples of this. The quoted-printable encoding (Defined in Section 5.1 of RFC 1341) is designed to handle this. It does two things:
+
+	Defines how to escape non-US-ASCII characters so that they can be represented in only 7-bit characters. (Short version: they get displayed as an equals sign plus two 7-bit characters.)
+	Defines that lines will be no greater than 76 characters, and that line breaks will be represented using special characters (which are then escaped).
+	Quoted Printable, because of the escaping and short lines, is much harder to read by a human than 7bit or 8bit, but it does support a much wider range of possible content.
+
+Base64 Encoding:
+	If your data is largely non-text (ex: an image file), you don't have many options. 7bit is off the table. 8bit and binary were unsupported prior to the MIME extension RFCs. quoted-printable would work, but is really inefficient (every byte is going to be represented by 3 characters).
+
+	base64 is a good solution for this type of data. It encodes 3 raw bytes as 4 US-ASCII characters, which is relatively efficient. RFC 1341 further limits the line length of base64-encoded data to 76 characters to fit within an SMTP message, but that's relatively easy to manage when you're just splitting or concatenating arbitrary characters at fixed lengths.
+
+	The big downside is that base64-encoded data is pretty much entirely unreadable by humans, even if it's just "plain" text underneath.

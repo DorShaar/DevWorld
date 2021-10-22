@@ -1,0 +1,7 @@
+mklink - created symbolic link:
+
+mklink /d <destinaiton_path> <original_path>
+
+example:
+	mklink /D "C:\SMD" "C:\Users\dor.shaar\Dropbox (Votiro)\Projects\SMD"
+             

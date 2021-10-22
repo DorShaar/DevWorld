@@ -1,0 +1,12 @@
+How to create message queues in Windows:
+
+1. Open Computer Management.
+2. Services and Applications -> Message Queuing -> private queues.
+	In case there is no "Message queueing" under Services and Applications, please read "How to reveal Message Queueing" below.
+3. Create a queue (right click -> new -> private queue). Make sure that the transactional is on "V".
+
+
+How to reveal Message Queueing:
+	Type programs and features at search command.
+	Click Turn windows features on or off, then the "windows features" window will be opened.
+	Press V on Microsoft Message Queue (MSMQ) Server (include all the sub lines there).
