@@ -1,0 +1,12 @@
+Crossed-signed certificate:
+	Cross signing certificate are about expanding trust, yes.
+	If you trust both CA1 and CA2, and a cert is signed by both, you've got a very high level of trust because two seaparate entities that you trust have verified the certificate.
+	
+	It has the added bonus of increasing the ease of verification of trust,
+	such as situations where you've got clients that trust CA1 or CA2 (but not both).
+	In such a case, you can cross-sign a cert to be trusted by both.
+	This allows more clients to verify trust without having to distribute separate certs for different CAs.
+
+	Another bonus is in situations where a CA's private key is leaked.
+	Let's say CA1's key leaks and your cert is signed by CA1 and CA2. In the wake of the leak, CA1 issues a revokation for its public key and you can no longer trust anything issued by CA1.
+	However, since your cert is cross-signed to CA2 as well, any client that trusts CA2 can still maintain a level of trust in your cert.

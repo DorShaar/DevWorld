@@ -159,9 +159,14 @@
 			}
 		},
 		{
-			"question": "how much time '{taskName}' should take to implement?",
+			"question": "How much time '{taskName}' should take to implement?",
 			"answerRange": ["1", "50"],
 			"variableName": "taskImplementationTime"
+		},
+		{
+			"question": "how much time after implementing '{taskName}' should take to review logs?",
+			"answerRange": ["1", "5"],
+			"variableName": "reviewLogsTime"
 		}
 	],
 	"WorkNotes": {
@@ -175,11 +180,14 @@
 			"Never give up on tests, even if you are in a rush. Those words are written by blood. It would save you a lot of hours"],
 		"CodeImplementation": ["Try avoid dependencies as much as you can, but consider how bug prone will your code be",
 			"If something was there, there is a reason for it. Before changing or removing it, make sure you understand what is does",
-			"Not understanding why something does not work? If relevant, read open issues in github"],
+			"Not understanding why something does not work? If relevant, read open issues in github",
+			"Be aware to sensitive information like secrets, passwords,.. Make sure you consume them via proper place where their are kept safe",
+			"Downtimes, even if they are small, may influence the customer. Try as much as you can to prevent the system to be restarted in order to apply some configurations, and those configurations will be updated dynamically"],
 		"WorkFlow": ["Tend to a CI/CD work (Continuous integration and delivery), so you can deliever, even partial implementation, to the benefit of the customer.",
 			"Let your system run with a new feature before delivering it to the customer. At least the most obvious bugs will appear first",
 			"In dailies or weeklies share your progress in few sentences instead of telling 'I'm in progress'",
 			"It's ok to not understand something. Better confess and ask questions than be shy",
+			"Try write your work progress on a note. Who knows? maybe your manager will interrupt you.. You will need it to keep track after context switching",
 			"Are you sure you have the best solution out there? If that is only 5 minutes looking over the internet, do it. You may bump into even more clever solutions",
 			"If that is possible, try be dynamic in the tasks of a feature. If one teammate knows part of the task and second teammate knows that other part, split it into two tasks to gain better efficiency",
 			"Longrun - Have the ability to measure yourself. Inserted new feauture? Great, does it effects the performance?",
@@ -190,6 +198,8 @@
 			"It is very honorable to pause or stop a work because the value it gives is not significant to the end customer. It's not easy to throw away your work"],
 		"NewTasksHandling": ["Got new task from product? Don't hasitate to talk directly to them, understand what are the needs of the customer",
 			"Going to do something new? Spend time read about it Documentations, RFCs,... If you find something valuable, share it of course"],
-		"HotFixes": ["Is the fix you are implementing is for a specific customer? Make sure you provide him a fix which is compatible for him. For example, if the customer has version 19.5 and you are developing on 20.2, implementing a fix in top of 20.2 may be incompatible for the customer"]
+		"HotFixes": ["Is the fix you are implementing is for a specific customer? Make sure you provide him a fix which is compatible for him. For example, if the customer has version 19.5 and you are developing on 20.2, implementing a fix in top of 20.2 may be incompatible for the customer"],
+		"Cloud": ["If you are working with a cloud client, ask yourself does it has limited quoute for you?",
+			"Keep in mind which region you get service from. Altough Internet is a fast creature, still long traffic effect the performance"]
 	}
 }

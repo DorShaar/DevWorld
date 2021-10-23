@@ -1,0 +1,2 @@
+In order to view installed certificates in Windows:
+run -> mmc (Microsoft Management Console)-> File -> Add/Remove Snap-in -> Add certificates to the right pane -> OK.

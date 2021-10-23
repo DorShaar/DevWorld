@@ -2,3 +2,6 @@ Windows tools:
 	Process Explorer
 	Process Monitor
 	VirtualMemory - VMMAP
+
+Online tools:
+	Bash check - https://www.shellcheck.net/ (bash check). It behaves like a compiler.

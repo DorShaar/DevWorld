@@ -1,0 +1,4 @@
+Based on https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+
+	It just a command that we can configure each "periodSeconds" to run. If the command succeed, it means we are ok
+	and the pod is considered healthy. If not, it considered non-healthy and the we the pod will be scheduled to restart

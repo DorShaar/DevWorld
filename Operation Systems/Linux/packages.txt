@@ -1,0 +1,32 @@
+We can check information about installed package with the next command:
+	apt-cache --no-all-versions show $package
+	
+	for example:
+	apt-cache show passwd
+	
+	will print us:
+	
+	Package: passwd
+	Architecture: amd64
+	Version: 1:4.5-1ubuntu1
+	Multi-Arch: foreign
+	Priority: required
+	Section: admin
+	Source: shadow
+	Origin: Ubuntu
+	Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+	Original-Maintainer: Shadow package maintainers <pkg-shadow-devel@lists.alioth.debian.org>
+	Bugs: https://bugs.launchpad.net/ubuntu/+filebug
+	Installed-Size: 2541
+	Depends: libaudit1 (>= 1:2.2.1), libc6 (>= 2.14), libpam0g (>= 0.99.7.1), libselinux1 (>= 1.32), libsemanage1 (>= 2.0.3), libpam-modules
+	Replaces: manpages-tr (<< 1.0.5), manpages-zh (<< 1.5.1-1)
+	Filename: pool/main/s/shadow/passwd_4.5-1ubuntu1_amd64.deb
+	Size: 815608
+	MD5sum: ee72025c76a707999cf26ec17a506efb
+	SHA1: 2b9f825f9f531bcd3d37da0100a312ec4c6e6966
+	SHA256: be39b0ea07800cc98de122adfa1d8e0895806b6715744e51df04b0b203a16202
+	Homepage: https://github.com/shadow-maint/shadow
+	Description: change and administer password and group data
+	Description-md5: 5bbd70e421ed3367a8299e53bd7afed4
+	Task: minimal
+	Supported: 5y

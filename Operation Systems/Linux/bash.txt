@@ -1,2 +1,6 @@
-$$ is the process ID of the running bash script.
+get process ID of bash script:
+	run $$
 
+run function in a background, other process:
+	call them with $, it will return the process id that is running.
+	In order to get the status of the process, run ps <process-id>.
