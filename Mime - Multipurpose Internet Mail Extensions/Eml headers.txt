@@ -1,0 +1,1 @@
+Emls can have custom content-id like x-watch-html which is the html content that i-phone-watch application can read.

@@ -157,19 +157,39 @@
 					}
 				}
 			}
+		},
+		{
+			"question": "how much time '{taskName}' should take to implement?",
+			"answerRange": ["1", "50"],
+			"variableName": "taskImplementationTime"
 		}
 	],
 	"WorkNotes": {
 		"KnowledgeShare": ["Share the information you learn or already know prior to implementation phase in order to get feedback from experienced co-workers",
 			"Studied something new? Implemented new feature? Write something about it so anyone can know (Confluence, Miro..)"],
-		"PullRequests": ["Clean your code but don't refactor. It may be difficult for your reviewer to observe your changes"],
-		"TestDrivenDesign": ["Try writing your tests before writing your code"],
-		"CodeImplementation": ["Try avoid dependencies as much as you can, but consider how bug prone will your code be."],
+		"PullRequests": ["Clean your code but don't refactor. It may be difficult for your reviewer to observe your changes",
+			"Try split your commits with meaningful seperation, meaning clean code should be in a separate commit than the main added logic",
+			"Make sure you understand the code you are reviewing and also make sure the reviewer understands your code changes",
+			"Before sending a PR, read you draft. Do yourself a review first"],
+		"TestDrivenDesign": ["Try writing your tests before writing your code",
+			"Never give up on tests, even if you are in a rush. Those words are written by blood. It would save you a lot of hours"],
+		"CodeImplementation": ["Try avoid dependencies as much as you can, but consider how bug prone will your code be",
+			"If something was there, there is a reason for it. Before changing or removing it, make sure you understand what is does",
+			"Not understanding why something does not work? If relevant, read open issues in github"],
 		"WorkFlow": ["Tend to a CI/CD work (Continuous integration and delivery), so you can deliever, even partial implementation, to the benefit of the customer.",
 			"Let your system run with a new feature before delivering it to the customer. At least the most obvious bugs will appear first",
-			"Avoid Best-Effort implemenation, try be focused on the customers needs instead",
-			"In dailies or weeklies share your progress in few sentences instead of telling 'I'm in progress'"],
-		"WorkTriangle": ["Plan your task according to a time-resource-content triangle",
-			"When raising a flag, be prepared with a different triangle"]
+			"In dailies or weeklies share your progress in few sentences instead of telling 'I'm in progress'",
+			"It's ok to not understand something. Better confess and ask questions than be shy",
+			"Are you sure you have the best solution out there? If that is only 5 minutes looking over the internet, do it. You may bump into even more clever solutions",
+			"If that is possible, try be dynamic in the tasks of a feature. If one teammate knows part of the task and second teammate knows that other part, split it into two tasks to gain better efficiency",
+			"Longrun - Have the ability to measure yourself. Inserted new feauture? Great, does it effects the performance?",
+			"Analytics - Going to created new feature? Think about data you need to pull from the customer inorder to understand if your feature is successful or not"],
+		"WorkTriangle": ["Plan your task according to a time-resource-content triangle and define DOD (Definition of Done)",
+			"When raising a flag, be prepared with a different triangle"],
+		"WorkPrioritization": ["Avoid Best-Effort implemenation, try be focused on the customers needs instead",
+			"It is very honorable to pause or stop a work because the value it gives is not significant to the end customer. It's not easy to throw away your work"],
+		"NewTasksHandling": ["Got new task from product? Don't hasitate to talk directly to them, understand what are the needs of the customer",
+			"Going to do something new? Spend time read about it Documentations, RFCs,... If you find something valuable, share it of course"],
+		"HotFixes": ["Is the fix you are implementing is for a specific customer? Make sure you provide him a fix which is compatible for him. For example, if the customer has version 19.5 and you are developing on 20.2, implementing a fix in top of 20.2 may be incompatible for the customer"]
 	}
 }

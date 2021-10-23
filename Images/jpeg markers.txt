@@ -1,0 +1,7 @@
+Image metadata structure - markers: They are, as their names, markers, that holds information about the image.
+From https://dev.exiv2.org/projects/exiv2/wiki/The_Metadata_in_JPEG_files:
+	A JPEG file contains several segments; each segment contains different kinds of data, delimited by two-byte codes called markers.
+	The markers are hexadecimal; they begin with 0xFF and end with a code (1 byte) indicating the kind of marker.
+	
+	Some markers consist of just those two bytes; others are followed by two bytes indicating the length of marker-specific payload data that follows.
+	The length includes the two bytes for the length, but not the two bytes for the marker.

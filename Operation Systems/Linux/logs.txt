@@ -1,0 +1,2 @@
+System logs in linux are writen into /var/log/boot.log.
+	commanding logger -p local7.info -t "title message" "log message" (or local7.err) will write into /var/log/boot.log.

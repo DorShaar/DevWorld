@@ -1,0 +1,11 @@
+netstat - refers network statistics. A command line network utility that displays network connections for TCP, routing tables and number of netowrk interfaces.
+
+A problem I had that I could solve thanks to netstat utility:
+
+	Tried to connect to localhost in port X and got the exception "No connection could be made because the target machine actively refused it".
+	That means the machine it active, but it does not listen on that X port. That means something making that port unreachable.
+
+	In order to check it, I used the "netstat -anb" command which requires run as administrator. I run it and grepped only the "LISTENING" values, since
+	the ports with the "ESTABLISHED" status have already an active connections.
+
+	I replaced the port to a one that is open (i.e. has "LISTENING" state) and I could have a progress.

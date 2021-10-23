@@ -1,0 +1,10 @@
+Based on https://textslashplain.com/2016/04/04/downloads-and-the-mark-of-the-web/
+
+Mark-Of-The-Web is a feature for NTFS (Windows Files System) to mark files that came from untrusted sources, like the internet.
+For example, Office use that feature in the next way:
+	If the Mark Of The Web is present, that indicates that file should be opened in a protective view mode.
+
+How do you know Mark of the Web exits?
+	1. You can right click on it, and in the general tab there will be a security note that will tell you "This file came from another computer and might be blocked to help protect this computer". There will be "Unblock" button next to it to tell the computer this is safe.
+
+	2. You can check it with cmd command dir <file path> /r. In case another stream is shown next the file name, something like "Zone.Identifier:$DATA", that means another mark is added to the file, and the content of such stream indicates which zone it came from. A further read can be done here: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/ms537183(v=vs.85)?redirectedfrom=MSDN

@@ -1,0 +1,13 @@
+Investigated memory dump with dotnet-dump. Some references and hints:
+
+	in order to debug linux dumps with dotnet: (https://docs.microsoft.com/en-us/dotnet/core/diagnostics/debug-linux-dumps)
+	use /usr/share/dotnet/shared/Microsoft.NETCore.App/3.1.15
+
+	documentation for dotnet-dump:
+	https://docs.microsoft.com/en-us/dotnet/core/diagnostics/sos-debugging-extension
+
+	dotnet-counters from (I downloaded the binary x64, copied it to the linux OS and cmhod +x it):
+	https://docs.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-counters
+
+	inside a docker, using dotnet-dump:
+	/root/.dotnet/tools/dotnet-dump analyze dump_no_sanitiziation < commands > output0.txt

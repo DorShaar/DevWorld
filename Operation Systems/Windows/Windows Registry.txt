@@ -1,0 +1,1 @@
+Defender keys are shown in the registry key: Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Exclusions\Paths

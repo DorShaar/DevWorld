@@ -1,0 +1,4 @@
+In Linux in general, what is the difference between Cron, Crontab and Cronjob?
+	cron is the name of the Linux tool/utility.
+	crontab is the file which contains the jobs and timing to execute.
+	jobs areselfe are cronjobs.

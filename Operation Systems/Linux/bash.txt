@@ -1,0 +1,2 @@
+$$ is the process ID of the running bash script.
+
