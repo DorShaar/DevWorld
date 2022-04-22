@@ -1,0 +1,11 @@
+Port is an integer from 0 to 65536 (16 bits long). It indicates a communication endpoint.
+
+It's always associated with an IP address of a host and the type of transport protocol used for communication.
+
+To have better "feeling" what is port, let's the host is a radio and the channel of the radio is the port, listening for recieved data to that channel (port).
+
+Known ports:
+80 - HTTP
+443 - HTTPS
+
+20 or 21 - FTP (File transfer protocol).

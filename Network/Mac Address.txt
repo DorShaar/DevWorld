@@ -1,0 +1,2 @@
+Mac address - Media access control address:
+    Pyshical address stamped on the network interface card. Has 48 bits so possible of 2^48 different addresses.

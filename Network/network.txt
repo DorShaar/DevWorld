@@ -1,0 +1,7 @@
+Network is a digital communication that it purpose is to share resouces.
+
+Network connection methods:
+    RJ45 - the known ethernet cables.
+    10base5, 10base2 - old network cable
+    WiFi.
+
