@@ -1,0 +1,72 @@
+IP Address is a layer3 (network) logical address assigned by an administrator.
+It is used to identify specific devices on a network.
+
+32 bits - x.x.x.x when x is one byte.
+Formed of two portions:
+    1. Network ID portion:
+        Identifies a specific network.
+        Routers maintain routing tables that contain the network
+    2. Host address portion:
+        Identifies a specific endpint on a network
+
+Class A:
+    Starts with binary 0.
+    Binary Range:
+        0.0.0.0 to 127.255.255.255
+
+    127 is reserved for the loopback (127.0.0.1)
+    0 network is reserved for defalult network (0.1.1.1)
+        For both of them you cannot configure static 0ip address.
+
+    Actual Range:
+        1.0.0.0 - 126.255.255.255
+    Mask:
+        255.0.0.0.
+
+    y.x.x.x/8 when y is the network portion and x.x.x is the hosts portion, 8 is the subnet mask.
+
+    Example:
+        Sending packet from 10.0.0.2 to 10.0.0.3 will be routed to the same network
+        Sending packet from 10.0.0.2 to 11.0.0.2 will be routed to the another network
+
+Class B:
+    Starts with binary 10.
+    Binary Range:
+        128.0.0.0 to 191.255.255.255
+    Mask:
+        255.255.0.0.
+
+    y.y.x.x/16 - when y.y is the network portion and x.x is the hosts portion, 16 is the subnet mask
+    Example:
+        Sending packet from 128.1.1.2 to 128.1.1.3 will be routed to the same network
+        Sending packet from 128.2.1.1 to 128.1.1.1 will be routed to the another network
+
+Class C:
+    Starts with binary 110.
+    Binary Range:
+        192.0.0.0 to 223.255.255.255
+    Mask:
+        255.255.255.0.
+
+    y.y.y.x/24 - when y.y.y is the network portion and x is the hosts portion, 24 is the subnet mask
+    Example:
+        Sending packet from 192.1.1.2 to 192.1.1.3 will be routed to the same network
+        Sending packet from 192.1.1.1 to 192.1.2.1 will be routed to the another network
+
+Class D:
+    Starts with binary 1110.
+    Binary Range:
+        224.0.0.0 to 239.255.255.255
+
+    Class D is a multicast class. It implies that one device is talking to a group of devices rathern than one to one.
+
+Class E:
+    Reserved IP addresses.
+    Starts with binary 1111
+    Binary Range:
+        240.0.0.0 to 255.255.255.255
+
+Link local addresses:
+    When no DHCP (dynamic Host Configuration Protocol) server is available, it allocates an ip in the range of 169.254.0.0/16
+        (from 169.254.0.0 to 169.254.255.255). That gives the ability to conmunicate with computers in the same subnet but will not be
+        routed outside of the network, so communication with devices in different subnet will not be possible.

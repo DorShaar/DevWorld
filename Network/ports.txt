@@ -4,8 +4,12 @@ It's always associated with an IP address of a host and the type of transport pr
 
 To have better "feeling" what is port, let's the host is a radio and the channel of the radio is the port, listening for recieved data to that channel (port).
 
-Known ports:
-80 - HTTP
-443 - HTTPS
+Port is a way to tell the transport level to which application the recieved data is destined. For example, if the port is 80, we actually say that the recieved data is relevant for
+    the http application. If the port is 22, we want that ssh application will read that data.
 
-20 or 21 - FTP (File transfer protocol).
+Known ports:
+    22 - ssh
+    23 - telnet
+    80 - HTTP
+    443 - HTTPS
+    20 or 21 - FTP (File transfer protocol)

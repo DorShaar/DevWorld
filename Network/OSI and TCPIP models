@@ -1,8 +1,0 @@
-        OSI             TCP/IP
-layer7  Application     Application (layers 5-7)
-layer6  Presentation
-layer5  Session
-layer4  Transport       Transport
-layer3  Network         Network
-layer2  Data Link       Data Link
-layer1  Physical        Physical

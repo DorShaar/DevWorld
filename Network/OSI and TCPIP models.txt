@@ -1,0 +1,8 @@
+        OSI             TCP/IP                          Protocol Data Unit (PDU)
+layer7  Application     Application (layers 5-7)        Applications
+layer6  Presentation
+layer5  Session
+layer4  Transport       Transport                       Segments
+layer3  Network         Network                         Packets
+layer2  Data Link       Data Link                       Frames
+layer1  Physical        Physical                        Bits

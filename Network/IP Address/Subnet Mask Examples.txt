@@ -1,0 +1,12 @@
+Example 1:
+    Device1 with IP 10.1.1.1 and subnet mask 255.255.0.0 sending message to device2 with ip 10.1.2.1.
+    Thanks to the 255.255.0.0 mask it understands that device2 is in the same network, so it won't send the message to the router and send it
+        directly to device2. It will send ARP message to request the MAC address of device2.
+
+Example 2:
+    Device1 with IP 10.1.1.1 and subnet mask 255.255.255.0 sending message to device2 with ip 10.1.2.1.
+    Thanks to the 255.255.255.0 mask it understands that device2 is not in the same network, so it send the message to the router that should
+        do the job of deliever the message to the correct place in the different subnet, device2.
+
+Subnet mask are contiguous, meaning it start is bits of only 1's and then ends with bits of only 0s. Mask like 240.255.3.191
+    (11110000.11111111.00000110.11000000) is not suppoted.
