@@ -1,2 +1,7 @@
 Mac address - Media access control address:
     Pyshical address stamped on the network interface card. Has 48 bits so possible of 2^48 different addresses.
+    Is a layer 2 address, it's purpose is to identify network interface (NIC).
+
+    Format:
+    OUI (Organisationally Unique Identifier) - 24bits.
+    NIC (Network Interface Controller) - 24 bits.

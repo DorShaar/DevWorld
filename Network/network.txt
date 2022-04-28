@@ -5,3 +5,9 @@ Network connection methods:
     10base5, 10base2 - old network cable
     WiFi.
 
+Types of communications:
+    Unicast - one to one communication
+    Multicast - one to many, only for subscribed clients. The device must excplicitly
+        ask for the traffic before revieve it.
+    Broadcast - one to many communication. Not supported in IPv6 but "implemented"
+        with multicast addressing.

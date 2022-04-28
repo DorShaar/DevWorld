@@ -1,4 +1,18 @@
-hub - get a signal on a specific port and send it to all the connected ports.
-switch - get a signal on a specific port and send it to specific port.
-router - route network traffic from one network to another (from one ip to another ip). Enable us to connect from local area network (LAN) to 
-    wide area network (WAN)
+hub:
+    Layer1 (Pysical) device.
+    get a signal on a specific port and send it to all the connected ports except from the sender port. By doing that it
+        amplifies the signal. It can be called multiport repeater.
+bridge:
+    Layer2 (Data Link) device.
+    Has MAC address table which enable to map port to Mac Address, so it sends to the relevant port.
+    If the Mac address is empty, it will be updated dynamically, so only when destination port is unknown the signal
+        is sent to all unknown ports.
+switch:
+    Layer2 (Data Link) device.
+    get a signal on a specific port and send it to specific port.
+    Has MAC address table which enable to map port to Mac Address. They are actually better bridges
+        in meanning of speed and number of supported ports.
+router:
+    Layer3 (Network) device.
+    route network traffic from one network to another (from one ip to another ip). Enable us to connect from local area network (LAN) to 
+        wide area network (WAN)
