@@ -1,0 +1,4 @@
+ICMP - Internet control message protoco
+    It's purpose is to diagnose and route network.
+    
+    Ping (ipconfig in Windows) is a way to use ICMP. 

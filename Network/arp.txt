@@ -1,0 +1,6 @@
+Address resolution protocal - ARP
+    It's a message that maps between IP address of layer 3 to MAC address of layer 2.
+    It's basically a message sends a questions "Who has ip address x.x.x.x?"
+    The ARP reply message sends back the ip and the MAC adress of the target machine.
+
+    You can send an arp message with the command "arp"
