@@ -1,0 +1,4 @@
+Socket is a logical component and is combined of:
+    1. Host's IP Address.
+    2. Port number used.
+    3. Transport protocol used.

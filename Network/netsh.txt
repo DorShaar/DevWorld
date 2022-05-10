@@ -1,0 +1,16 @@
+netsh - a command-line scripting utility that allows you to display or modify the network configuration of a computer that is currently running.
+
+to view all network interfaces:
+    netsh interface show interface
+    or
+    netsh int show int
+
+    Output Example:
+        Admin State    State          Type             Interface Name
+        -------------------------------------------------------------------------
+        Enabled        Connected      Dedicated        ??Ethernet 2
+        Enabled        Disconnected   Dedicated        ??Ethernet 3
+        Disabled       Disconnected   Dedicated        ??Ethernet 4
+        Enabled        Disconnected   Dedicated        ??Wi-Fi
+        Enabled        Disconnected   Dedicated        ??Ethernet 6
+        Enabled        Connected      Dedicated        vEthernet (WSL)

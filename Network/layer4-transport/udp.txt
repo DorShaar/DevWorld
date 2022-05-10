@@ -1,0 +1,5 @@
+UDP - User Datagram Protocol:
+    Connection less
+    does not guarantee segament delivery
+
+    Good analogy is a real life mail. We can send a message and we would not know if the message was delivered to the end destination.
