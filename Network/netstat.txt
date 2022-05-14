@@ -9,3 +9,8 @@ A problem I had that I could solve thanks to netstat utility:
 	the ports with the "ESTABLISHED" status have already an active connections.
 
 	I replaced the port to a one that is open (i.e. has "LISTENING" state) and I could have a progress.
+
+To view routing tables, you can use the command:
+	netstat -r
+	or
+	routep print

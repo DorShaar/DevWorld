@@ -1,0 +1,4 @@
+dns - domain name system:
+    Analogy: DNS is a phonebook, it mapps between a domain name (contant name) to an ip (phone number).
+
+c:/Windows/System32/drivers/etc/hosts - a file on the local windows computer which maps hostnames to ip addresses.

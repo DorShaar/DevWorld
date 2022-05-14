@@ -1,0 +1,5 @@
+NTP - Network Time Protocol:
+    A protocol which is used for clock synchronization between network devices or computer systems.
+
+    Stratum level:
+        Defined the quality of the time source. Level 0 is the atimic clock ntp server itself, which provides time to higher Stratum levels.
