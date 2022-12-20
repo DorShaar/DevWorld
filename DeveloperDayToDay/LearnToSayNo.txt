@@ -1,0 +1,19 @@
+From: httpswww.andycleff.com202212doing-no-betterutm_source=techleaddigest&utm_medium&utm_campaign=1465
+
+Sometimes the right response to a request is “No.” Maybe “Yes” and “No” are the wrong words, or the wrong responses,
+	but the meaning is what we should deliever.
+	
+One of the teammates asks you for an help, instead of being rude and say "no", you can say something like:
+	"I am flattered that you thought of me but I’m afraid I don’t have the bandwidth",
+	"I would very much like to but I’m overcommitted"
+	
+Remember That A Clear “No” Can Be More Graceful Than A Vague Or Noncommittal "Yes" (McKeown).
+	If you’ve ever been on the receiving end of a vague or noncommittal “yes” situation, a clear “I am going to pass on this” 
+	or  "I will try to make this work" or "I might be able to", only to be let down at the last minute. 
+	Being vague is not the same as being graceful, and delaying the eventual "no" will only make it that much harder
+	and the recipient that much more resentful.
+		
+When to say "no"?
+	If the Product Owner expects them to deliver more than their capacity (on a daily basis..).
+	If anyone asked you to deliver faster and it  violate the Definition of Done agreements. If faster, let's change the DOD first.
+	
