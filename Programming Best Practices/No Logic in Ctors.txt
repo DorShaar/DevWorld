@@ -1,0 +1,7 @@
+Logic in Ctor's is bad practice. While you intend to create an object which requires long time to take should
+not be happening and is a bad practice. Therefore, complex logic or async operations are not recommended to be in Ctors.
+
+What happens if creating an instance of an object requires some initialization which is time consuming? For that I write here
+	two simple solutions:
+	One thing to do is to start a task that when I need the operation to complete in one of the methods, I wait for it.
+	The second option Microsoft added the Lazy option that does the same - Lazy pattern - https://endjin.com/blog/2023/01/dotnet-csharp-lazy-async-initialization.
