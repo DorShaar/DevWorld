@@ -1,0 +1,12 @@
+The problem - Pull request and code reviews are found to be the main bottleneck in the development process.
+From a podcast I listen to in Dev Interuppted I summarize:
+
+	Ship - Don't let birocratics ruin the flow of development process. If you are confident with the change
+		and have good test coverages for that feature - ship it, push it to the branch.
+
+	Show - Extends the Ship phase, you should open PR if you think it will beneficial to share the change, show it,
+		to others to improve share knowledge. Still, you can push to your branch without waiting for the others.
+	
+	Ask - When you need or want to have a a review on your code. Even if you are confident about your change but
+		you think some other developers can give their sight on the issue - this is the state where you should open
+		and wait for PR.
