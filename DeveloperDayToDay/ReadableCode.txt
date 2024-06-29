@@ -1,0 +1,15 @@
+https://dzone.com/articles/reading-code-is-a-skill?utm_source=programmingdigest&utm_medium=email&utm_campaign=409
+
+The problem is not that we shouldn't write readable code. Of course we should aim to write readable code, if only for our own poor selves further down the line (there is no one less capable of reading my code the following week than me). The problem is that these two issues are not mutually exclusive. It's not "write readable code" or "learn to read code". That's like saying, "I'm going to drive really economically so I don't need to put petrol in the car". No. You're still going to need to put fuel in the car (if it's not electric!) at some point no matter how economically you drive
+
+It's just plain wrong to assume "unreadable code" was the output of someone smashing away at the keyboard and not caring about one of the consumers of the code, i.e. other programmers. Code that's hard to understand is often a result of an accumulation of things:
+
+The code was written at a time when the language/framework didn't do then what it does now;
+The code was written a while back and the fashions and "best practices" back then were different;
+Each line of code was written with readability in mind, but over time as more lines got added, the overall message was lost;
+People moved on and moved away, and now you haven't got anyone to ask about the business or technical reasons behind something (and of course the documentation is horribly out of date).
+
+In Summary
+Reading code is a skill.
+Encouraging developers to "write readable code" does not take away the need for developers to level up their "reading code" skill.
+And of course you should write readable code.

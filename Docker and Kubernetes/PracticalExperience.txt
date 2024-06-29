@@ -8,3 +8,8 @@ Docker mount:
 	After running the docker with the -v mounting command above, my application that run in the container failed to find directory /mounted-data/plans
 		while it already had that directory! For a proof, I had to go into the running container, puting 'ls' I have found /mounted-data/plans directroy.
 		Weird... In the time, my mounted directory from windows, let's say it was "C:/Users/Me/tasker-planner/", had no directories inside. The application did not crushed after I manually added the "plans" directory in my Windows machine. So as I understand, mounting container with -v command kind of making the conatiner ignore all the real paths inside the container that related to the mount.
+
+
+When kubernetes in docker desktop does is starting forever, do the next:
+	delete C:\Users\DorShaar\AppData\Local\Docker\pki (create backup just in case)
+	delete "C:\Users\DorShaar\.kube" (create backup just in case)

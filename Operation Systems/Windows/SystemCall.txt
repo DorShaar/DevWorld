@@ -1,0 +1,2 @@
+Windows system calls table: https://j00ru.vexillium.org/syscalls/nt/64/
+Github: https://github.com/j00ru/windows-syscalls
