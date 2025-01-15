@@ -1,0 +1,11 @@
+AWS region:
+        A region is a geographic area that consists of different Availability Zones.
+        Each region has at least 3 abailabilities zones, maximum of 6.
+        Choosing a region is depends on
+                - Regulations (let's say a limitiation of a country to store the data only on it's region)
+                - Latency - if most of the customers are in region x (Let's say america..), it is prefered to use such region, otherwise network latency will occur and
+                        it will lead to lags on the application.
+
+AZ - Availability Zone:
+        Distinct location from within AWS region that is engineered to be isolated from failures.
+
