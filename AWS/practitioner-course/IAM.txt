@@ -1,0 +1,10 @@
+Policies may be given to a group, so user will be provided with a policy according to it's groups
+Policies also may be given to a user without a group, it called inline policy.
+
+Q: What will be the outcome for a case in aws on IAM service, user is found in a group that allows getting objects from bucket "games" and also found in a group that does not allow getting object from bucket "games"?
+A: In AWS IAM, Explicit Deny takes precedence over any Allow permission. This means that even though the user is in a group that allows access to the "games" bucket, the Deny permission from the other group will override that Allow permission.
+
+Always remember that in IAM:
+* Allow permissions grant access unless there is an explicit Deny.
+* Explicit Deny will always override Allow permissions.
+
