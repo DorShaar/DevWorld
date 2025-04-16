@@ -1,3 +1,5 @@
+IAM - Identity and Access Management
+
 Policies may be given to a group, so user will be provided with a policy according to it's groups
 Policies also may be given to a user without a group, it called inline policy.
 
@@ -8,3 +10,8 @@ Always remember that in IAM:
 * Allow permissions grant access unless there is an explicit Deny.
 * Explicit Deny will always override Allow permissions.
 
+
+Console:
+aws iam list-users --profile dor-aws will provide all users information.
+
+To see all profiles, open "C:\Users\<user-name>\.aws\config"

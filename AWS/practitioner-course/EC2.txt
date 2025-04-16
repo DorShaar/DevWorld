@@ -1,0 +1,8 @@
+EC2 - Elastice Compute Cloud
+
+Used for:
+	* Rent virtual machines
+	* Storing data on virtual drives
+	* Distributing load across machines (ELB - Elastic Load Balancer)
+	* Scaling the services using an auto-scaling group (ASG)
+
