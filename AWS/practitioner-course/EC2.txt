@@ -6,3 +6,27 @@ Used for:
 	* Distributing load across machines (ELB - Elastic Load Balancer)
 	* Scaling the services using an auto-scaling group (ASG)
 
+EC2 instances types (machines) naming conventions:
+	for example, m5.2xlarge
+	m: instance class
+	5: generation (improved over time)
+	2xlarge: size within the instance class (more memory and more cpu)
+
+EC2 offers instances types that optimized for computing (CPU), memory, storage and general (balanced between computing, memory and storage)
+
+Security groups ("firewalls"):
+	They are fundemental for network security, controls how traffic is allowed in or out of our EC2 instances. To improve security, everything is assumed to be denied and security groups are allowing rules.
+
+Security note: do not configure aws cli crednetials into an ec2 machine since they can be retrived easily, therefore it is a potential security risk.
+
+EBS Volume:
+	Elastic Block Store, is a network drive you can attach to and ec2 instance while try run.
+	Since EC2 instances may be terminated, data may be lost, so it allows us to persists data.
+	When creating an EC2 instance, it is possible, in the storage section, to mark the EBS part to not be deleted when the instance is terminated, so the data will be saved for us.
+
+AMI:
+	Amazon machine images - can be created from an EC2 instance, and from such image we can create new EC2 instances.
+	Let's say we have an instance, called X, with some softwere that already installed there, we want to create another instance with the same softwere and maybe add extra configurations. We can create image from X, and create new instance Y based on image X.
+
+EFS:
+	Elastic File storage - based on the network, so in contradiction to EBS, it may be connected to many EC2 instances simultaneously and also may be shared accross multiple Availability-Zones (AZ).
