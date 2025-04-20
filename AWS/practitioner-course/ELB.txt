@@ -1,0 +1,17 @@
+ELB - Elastic Load Balancing
+
+There are 3 types for load balancers AWS offers:
+
+ALB - Applicatin Load Balancer (Layer 7):
+	for HTTP / HTTPS / gRPC protocols
+	for HTTP routing features
+	Static DNS (URL)
+
+NLB - Network Load Balancer (Layer 4):
+	for TCP / UDP protocols, using TLS.
+	gives static ip.
+	Fit for case of milions of requests per second with low latencies.
+
+GWLB - Gateway Load Balancer (Layer 7):
+	GENEVE protocol (IP packets).
+	Route traffic to firewalls that you manager on EC2 instances.

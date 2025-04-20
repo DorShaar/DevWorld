@@ -1,0 +1,13 @@
+Auto Scaling Group (ASG):
+
+Scales out (add instances) or scales in (remove instances) according to scale policy.
+
+Policies:
+Default policy - manual, scales the amount of instances to the desired capacity.
+Dynamic:
+	Step scaling - scale by CPU of a single instance. Example: if we have two instances A and B, and we set to scale out by two unites if CPU reaches 70%. B will be scaled to B1 and B2, overall 3 instances.
+
+	Target scaling - looks on the CPU / network traffic / more metrics of avarage of all instances.
+
+Schedule scaling - if we know a specific time frame that load is expected to be increased, we can set it.
+Predictive scaling - uses machine learning according to past auto scale data
