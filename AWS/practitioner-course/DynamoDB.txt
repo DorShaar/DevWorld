@@ -1,0 +1,15 @@
+NoSQL database invented by Amazon. Works with tables, each row can use any column , whether is is new or not.
+
+For example:
+key		first_name	last_name	phone_number 	computer_name
+1		Roy			Kay			052-55555
+2 		Dor			
+3												123-JA
+
+
+DynamoDB Accelerator - DAX:
+	Works the same as ElatiCache (fully managed in memory cache) but specific for DynamoDB. It can be used only for DynamoDB while ElastiCache can be used for DynamoDB and other databases as well. Still, DAX was created especially for DynamoDB so it would be more natural to use it
+
+DynamoDB global tables - those tables are global, meaning they can be accessed by multiple regions
+	for both read and write, and there are processes which make sure all replicas are consistent.
+	The replication is by the Last write wins principle, means if regionA write to global table basically on the same time as regionB while the replication sync did not occur yet, the newest update is the one the will be replicated across all replicas of the global table.

@@ -1,0 +1,6 @@
+RDS - Relational Database Service
+
+Works with many relational databases like sql, postgress and more. AWS offers Aurura which is Amazon's product.
+
+It can have replicas across multi availability zones.
+Also have option to supports 15 read replicas to reduce the read latency.

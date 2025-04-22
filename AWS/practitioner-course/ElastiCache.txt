@@ -1,0 +1,5 @@
+ElasiCache is in memory databases, such as redis or MemCache, which come to improve read and write operations on database which is slower.
+
+
+ELB (Load balancer) => EC2 machine 	<=>	 ElastiCache in memory database - fast
+									<=>	 Amazon RDS (database) - slow
