@@ -1,0 +1,4 @@
+linux dotnet mutex locations:
+
+/tmp/.dotnet/shm/global/
+
