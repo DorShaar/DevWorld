@@ -1,0 +1,4 @@
+CDN - Content Delivery Network - CloudFront
+
+Improve read performeance, content is cached at an edge location. It improved UX.
+It is actually a cache.

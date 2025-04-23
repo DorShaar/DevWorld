@@ -1,0 +1,13 @@
+Route53 is a manaaged DNS service which perform several things:
+
+It perform DNS routing, means it provide an IP from a given url (like DNS should...)
+1. 	Web Browser -> foo.example.com -> Route53
+				<- A: 11.22.33.44
+
+2. Weighted Routing Policy - It does sort of load balancing.
+	If we have 3 different instances, with the following whights: 70, 20, 10, that means
+	Route53 service will make sure to split the traffic between each instance in percentages of 70, 20, 10.
+
+3. Latency Routing Policy - Route53 will make sure to provide the IP that is the most close to the client.
+
+4. Failover Routing Policy - Route53 will make sure to perform healthchecks on the primary instance, and 	if it fails it should provide the IP of the failover (backup) instance.
