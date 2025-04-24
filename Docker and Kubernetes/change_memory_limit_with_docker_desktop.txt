@@ -1,0 +1,12 @@
+I run a docker that consumed around 8GB memory, and the limit for each container was 8 GB.
+When I run it, I got 137 exit code error which indicates the container was stopped due to memory limitation.
+
+The docker was run with docker desktop, using WSL. In order to fix it I had to go to "C:\Users\<username>\.wslconfig" and change memory from 8GB to more. BUT this was the easy solution, because it will interrupt the memort of the operation system outside the virtual machine world. So I saw I have another option and it to use swap, meaning swap file - that allows the virutal machine to use disk file of the running opration system to use it as memory, when memory of the virutal machine is low. So instead of increasing memory I added swap.
+
+So this was the final .wslconfig file that fix the issue for me:
+[wsl2]
+memory=8GB
+processors=4
+swap=8GB
+
+ofcourse this solution will cause the running docker to be more slow, that something I can allow myself since I prefer to not harm the performance of my running operating system.
