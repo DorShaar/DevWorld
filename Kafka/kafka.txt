@@ -1,0 +1,43 @@
+Based on https://www.hellointerview.com/learn/system-design/deep-dives/kafka
+
+We will explain Kafka usage by givein a motivating example - world cup soccer games:
+
+We are using kafka to perform updates of events from a producer to a website, the consumer.
+
+Producer -> (sub Brazil 83rd min), (Goal France 81st minute), (Goal Argentina 80th minute) -> Consumer.
+
+That is working well, until we have a lot more events on the queue. So in order to fix it we should scale horizontally the servers, so we should have more queues, so the queue will keep up with the pace. The flow looks like that:
+
+Producer -> server1: (Goal Argentina 80th minute [Argentina vs Brazil]) 					-> Consumer
+			server2: (Goal France 81st minute), (sub Brazil 83rd min [Argentina vs Brazil])
+
+Now we are introducing to another problem, the consumer may fetch the event of Argentina vs Brazil from the second server first and only after it from the first server, so the time line will be messed up - events will not be processed in the correct order.
+
+To fix that, Kafka has feature called partition - each "server" will get events according to partition. So the flow looks like that: 
+
+Producer -> server1: (Goal France 81st minute) 									-> Consumer
+			server2: (sub Brazil 83rd min [Argentina vs Brazil]), (Goal Argentina 80th minute [Argentina 			vs Brazil])
+So in order to scale, we should menetion distribution strategy, which is the partitions.
+
+Now, we are bumped into another problem - consumer cannot keep up with all of the events. Inroder to overcome that, we should scale up the consumers. So now we have 3 consumers, for example.
+
+Producer -> server1: (Goal France 81st minute) 									-> Consumer X 3
+			server2: (sub Brazil 83rd min [Argentina vs Brazil]), (Goal Argentina 80th minute [Argentina 			vs Brazil])
+
+Let's name the 3 consumers consumerA, consumerB and consumerC. How can we be sure that consumerA and consumerB does not consume the same event? In Kafka there is a concept called consumers group, which make sure that a message can be consumed by two consumers from the same group.
+
+No are are good, but now we are evolving and we do not show events for only soccer but also for basketball, baseball and so on ...
+
+Here are introducing the topics, and each group can register to a single topic. So it will look like that:
+
+Producers -> soccer topic: 
+				(Goal France 81st minute)
+				(sub Brazil 83rd min [Argentina vs Brazil]), (Goal Argentina 80th minute [Argentina 			vs Brazil])
+
+			 basketball topic: 
+				(Sub China 2:14 2nd half), (3pt shot China 10:14 1st half)
+				(Sub Portugal 3:15 2nd half), (3pt shot Portugal 09:14 1st half)
+
+Terminology:
+	
+		
