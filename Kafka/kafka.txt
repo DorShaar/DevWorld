@@ -39,5 +39,14 @@ Producers -> soccer topic:
 				(Sub Portugal 3:15 2nd half), (3pt shot Portugal 09:14 1st half)
 
 Terminology:
-	
+	Broker - 		The servers that hold the "queue"
+	Partitions -	The "queue". An ordered, immutable sequence of messages that we append to, like a log 					file. Each broker can have muliple partitions.
+	Topics -		A logical grouping if partitions. We pulbish and consume from topics.
+	Producer - 		write messages to topics.
+	Consumer - 		Read message from topics.
+
+Message (Record):
+	Consisted of Headers, Key (Partition key), Value and Timestamp.
+
+
 		
