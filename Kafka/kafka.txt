@@ -41,12 +41,16 @@ Producers -> soccer topic:
 Terminology:
 	Broker - 		The servers that hold the "queue"
 	Partitions -	The "queue". An ordered, immutable sequence of messages that we append to, like a log 					file. Each broker can have muliple partitions.
-	Topics -		A logical grouping if partitions. We pulbish and consume from topics.
+	Topics -		A logical grouping if partitions. We publish and consume from topics.
+						A topic can have multiple partitions.
 	Producer - 		write messages to topics.
 	Consumer - 		Read message from topics.
+
+	Question - what is the difference between topic and partitoins?
+		topic is a logical grouping of message, it exists in code.
+		partitions are pyhisical grouping, the actual logs file on disk.
+
 
 Message (Record):
 	Consisted of Headers, Key (Partition key), Value and Timestamp.
 
-
-		

@@ -1,0 +1,17 @@
+What is the transactional.id?
+The transactional.id doesn’t relate to a particular transaction. It is used to identify transactions from a specific producer. A producer that performs transactions is known in the Kafka documentation as a “transactional producer”, and this is what the transactional.id relates to. A producer could run for days, or months, performing millions of transactions, and it will use the same transactional.id throughout. 
+
+It enables transaction recovery across multiple sessions of a single producer instance. The transactional.id helps avoid “zombie producers” – a producer that was thought to have failed, or been deliberately killed, but is in fact still running. Kafka transactions enforce that only one producer is allowed to use a given transactional.id at a time. As a result, when Kafka sees the replacement producer, with the same transactional.id, it will “fence out” all interactions from the old one, disarming this zombie producer.
+
+
+Case of two producers which has different transactional id:
+Producer A, transactional id 1 - Writes A B C D
+Producer B, transactional id 2 - Writes E F G H
+Result Topic: A B C D E F G H
+
+Case of two producers which has the same transactional id:
+Producer A, transactional id 3 - Writes A B (Here producer B created with the same transactional id) C D
+Producer B, transactional id 3 - Writes E F G H
+What happens is that the former producer, A, is fenced out, so Kafka's brokers will not allow it to publish records C and D, and the records from the last commited producer, B, will be commited.
+Result Topic: A B E F G H
+
