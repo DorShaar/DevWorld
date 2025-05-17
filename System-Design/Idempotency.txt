@@ -1,0 +1,16 @@
+In distributed systems, network failures and service retries are common. If a user accidentally refreshes a payment page, the system might receive two payment requests instead of one.
+
+Idempotency ensures that repeated requests produce the same result as if the request was made only once.
+
+Here’s how it works:
+Each request is assigned a unique ID - Idempotnecy key (e.g., request_1234).
+Before processing, the system checks if the request has already been handled.
+If yes → It ignores the duplicate request.
+If no → It processes the request normally.
+
+Idempotency prevents duplicate transactions and ensures data consistency in distributed systems.
+
+To achieve that, we have to methods:
+1. Frontend (Webpage, mobile app) creates the idempotnecy key and saves it in a session store or local store. So even with refresh the key is loaded.
+2. Backend - the backend created the idempotency key and returns it to the frontend. But - Key Principle: Idempotency Must Be Server-Enforced, Not Client-Dependent. That means that the backend should never trust
+the frontend, even if the frontend forgets the key and request with new one, the backend should have the ability to detect duplication - that can be performed, for example in the payment world, with destination_id, source_id, amount and timestamp.

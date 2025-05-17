@@ -1,0 +1,28 @@
+As we scale our system across multiple servers, databases, and data centers, we enter the world of distributed systems.
+
+One of the fundamental principles of distributed systems is the CAP Theorem, which states that: No distributed system can achieve all three of the following at the same time:
+
+Consistency (C) → Every node always returns the most recent data.
+
+Availability (A) → The system always responds to requests, even if some nodes are down (but the data may not be the latest).
+
+Partition Tolerance (P) → The system continues operating even if there’s a network failure between nodes.
+
+Since network failures (P) are inevitable, we must choose between:
+
+Consistency + Partition Tolerance (CP) → Ensures every request gets the latest data but may reject requests during failures. Example: SQL databases like MySQL.
+
+Availability + Partition Tolerance (AP) → Ensures the system always responds, even if some data is stale. Example: NoSQL databases like Cassandra and DynamoDB
+
+
+Example for Availability + Partition Tolerance (AP):
+In distributed NoSQL databases, achieving instant consistency across all servers is too slow.
+Instead, we use Eventual Consistency—which means:
+Not all nodes are updated instantly, but given enough time, they eventually sync and return the same data.
+This allows the system to remain highly available and fast, even under extreme loads.
+
+How Eventual Consistency Works:
+A user updates data in one replica of the database.
+The system immediately acknowledges the update, ensuring high availability.
+The update is then propagated asynchronously to other replicas.
+After a short delay, all replicas have the latest data, ensuring consistency over time.
